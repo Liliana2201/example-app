@@ -14,8 +14,10 @@ class CreateApplicationsTable extends Migration
     public function up()
     {
         Schema::create('applications', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id_app'); //id
+            $table->integer('id_category')->unsigned(); //id категории
+            $table->integer('id_stud')->unsigned(); //id студента, оставившего заявку
+            $table->string('description'); //описание проблемы
         });
     }
 

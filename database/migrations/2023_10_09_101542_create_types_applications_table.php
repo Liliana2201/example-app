@@ -14,8 +14,9 @@ class CreateTypesApplicationsTable extends Migration
     public function up()
     {
         Schema::create('types_applications', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id_category'); //id
+            $table->string('name_category'); //название категории
+            $table->integer('id_post')->unsigned(); //id должности, кому отправляется заявка
         });
     }
 

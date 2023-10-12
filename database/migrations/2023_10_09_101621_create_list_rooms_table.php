@@ -14,8 +14,12 @@ class CreateListRoomsTable extends Migration
     public function up()
     {
         Schema::create('list_rooms', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->integer('id_dom'); //id общежития
+            $table->integer('num_room'); //номер комнаты
+            $table->integer('level'); //этаж
+            $table->integer('num_beds'); //количество мест
+            $table->integer('id_cond')->unsigned(); //id состояния комнаты
+            $table->integer('id_prop')->unsigned(); //id имущества
         });
     }
 

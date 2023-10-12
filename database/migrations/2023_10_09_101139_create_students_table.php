@@ -14,8 +14,26 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->increments('id_stud'); //id
+            $table->integer('room'); //комната
+            $table->string('surname'); //фамилия
+            $table->string('name'); //имя
+            $table->string('patronymic')->nullable(); //отчество
+            $table->char('group'); //группа
+            $table->char('series_pas'); //серия паспорта
+            $table->char('number_pas'); //номер паспорта
+            $table->string('issued_pas'); //кем выдан
+            $table->date('date_pas'); //дата выдачи паспорта
+            $table->date('date_births'); //дата рождения
+            $table->string('hometown'); //родной город
+            $table->integer('id_contract')->unsigned(); //номер договора
+            $table->float('balance'); //баланс
+            $table->char('phone'); //телефон
+            $table->char('email'); //почта
+            $table->integer('work_out')->default(0); //отработано часов
+            $table->date('date_flg'); //дата последней флюрографии
+            $table->char('url_photo'); //ссылка на фото
+            $table->integer('id_prop')->unsigned(); //id имущества
         });
     }
 
