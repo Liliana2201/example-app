@@ -18,6 +18,7 @@ class CreateApplicationsTable extends Migration
             $table->integer('id_category')->unsigned(); //id категории
             $table->integer('id_stud')->unsigned(); //id студента, оставившего заявку
             $table->string('description'); //описание проблемы
+            $table->timestamps();
         });
     }
 

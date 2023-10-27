@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWashingMachinesTable extends Migration
+class CreatePropertiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateWashingMachinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('washing_machines', function (Blueprint $table) {
-            $table->increments('id_mach'); //id
+        Schema::create('properties', function (Blueprint $table) {
+            $table->increments('id_prop'); //id
             $table->integer('id_dom')->unsigned(); //id общежития
-            $table->date('date_check')->nullable(); //дата последней проверки состояния машинки
+            $table->string('title_prop'); //название имущества
+            $table->integer('count')->default(0); //количество
         });
     }
+
 
     /**
      * Reverse the migrations.
@@ -27,6 +29,6 @@ class CreateWashingMachinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('washing_machines');
+        Schema::dropIfExists('properties');
     }
 }
