@@ -22,4 +22,8 @@ class Students extends Model
     {
         return $this->hasMany(Laundry::class, 'id_wash');
     }
+    public function contract() //возвращает студента этого контракта
+    {
+        return $this->hasOne(Contracts::class, 'id_contract');
+    }
 }
