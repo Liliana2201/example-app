@@ -16,8 +16,9 @@ class CreateDormitoriesTable extends Migration
         Schema::create('dormitories', function (Blueprint $table) {
             $table->increments('id_dom'); //id
             $table->string('title_dom'); //название
-            $table->string('slug_dom'); //слаг - чтобы норм отображалось
+            $table->string('address'); //адрес общежития
             $table->char('phone'); //номер вахты
+            $table->char('url_photo'); //ссылка на фото
         });
     }
 
