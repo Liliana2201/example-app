@@ -1,7 +1,6 @@
 @extends('admin.layouts.layout')
 
 @section('content')
-    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
@@ -17,7 +16,7 @@
             <!-- Default box -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Общежития</h3>
+                    <h3 class="card-title">Список общежитий</h3>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -64,17 +63,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach ($dormitories as $dormitorie)
+                                        @foreach ($dormitories as $dormitory)
                                             <tr class="odd">
-                                                <td class="dtr-control sorting_1" tabindex="0">{{ $dormitorie->title_dom }}</td>
-                                                <td>{{ $dormitorie->address }}</td>
-                                                <td>{{ $dormitorie->phone }}</td>
-                                                <td>{{ $dormitorie->url_photo }}</td>
+                                                <td class="dtr-control sorting_1">{{ $dormitory->title_dom }}</td>
+                                                <td>{{ $dormitory->address }}</td>
+                                                <td>{{ $dormitory->phone }}</td>
+                                                <td>{{ $dormitory->url_photo }}</td>
                                                 <td>
-                                                    <a href="{{ route('dormitories.edit', ['dormitorie' => $dormitorie->id_dom]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                    <a href="{{ route('dormitories.edit', ['dormitory' => $dormitory->id_dom]) }}" class="btn btn-info btn-sm float-left mr-1">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    <form action="{{ route('dormitories.destroy', ['dormitorie' => $dormitorie->id_dom]) }}" method="post" class="float-left">
+                                                    <form action="{{ route('dormitories.destroy', ['dormitory' => $dormitory->id_dom]) }}" method="post" class="float-left">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
@@ -115,6 +114,5 @@
 
         </section>
         <!-- /.content -->
-    </div>
 @endsection
 

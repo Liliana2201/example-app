@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dormitories extends Model
 {
+    protected $fillable = ['title_dom', 'address', 'phone', 'url_photo'];
     public function staff() //возвращает персонал, работающий в указанном общежитии
     {
         return $this->hasMany(Staff::class, 'id_dom');
