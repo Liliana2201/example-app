@@ -79,7 +79,7 @@ class DormitoryController extends Controller
         return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id_dom])->with('success', 'Изменения сохранены!');
     }
 
-    /**
+    /**psrsrsrs
      * Remove the specified resource from storage.
      *
      * @param  int  $id
