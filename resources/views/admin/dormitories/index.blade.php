@@ -65,7 +65,7 @@
                                         <tbody>
                                         @foreach ($dormitories as $dormitory)
                                             <tr class="odd">
-                                                <td class="dtr-control sorting_1">{{ $dormitory->title_dom }}</td>
+                                                <td class="dtr-control sorting_1">{{ $dormitory->title }}</td>
                                                 <td>{{ $dormitory->address }}</td>
                                                 <td>{{ $dormitory->phone }}</td>
                                                 <td>{{ $dormitory->url_photo }}</td>

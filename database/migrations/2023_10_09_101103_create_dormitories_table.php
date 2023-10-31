@@ -14,11 +14,12 @@ class CreateDormitoriesTable extends Migration
     public function up()
     {
         Schema::create('dormitories', function (Blueprint $table) {
-            $table->increments('id_dom'); //id
-            $table->string('title_dom'); //название
+            $table->increments('id_dom'); //id_dom
+            $table->string('title'); //название
             $table->string('address'); //адрес общежития
             $table->char('phone'); //номер вахты
             $table->char('url_photo')->nullable(); //ссылка на фото
+            $table->timestamps();
         });
     }
 

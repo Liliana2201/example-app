@@ -16,24 +16,24 @@
             <div class="card-header">
                 <h3 class="card-title">Добавить новое общежитие</h3>
             </div>
-            <form role="form" method="post" action="{{ route('dormitories.store') }}">
+            <form role="form" method="post" action="{{ route('dormitories.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
                         <label for="title">Название</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Введите название">
+                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" placeholder="Введите название" autocomplete="on">
                     </div>
                     <div class="form-group">
                         <label for="address">Адрес</label>
-                        <input type="text" class="form-control  @error('address') is-invalid @enderror" id="address" placeholder="Введите адрес">
+                        <input type="text" class="form-control  @error('address') is-invalid @enderror" id="address" placeholder="Введите адрес" autocomplete="on">
                     </div>
                     <div class="form-group">
                         <label for="phone">Номер вахты</label>
-                        <input type="number" class="form-control  @error('phone') is-invalid @enderror" id="phone" placeholder="Введите номер">
+                        <input type="number" class="form-control  @error('phone') is-invalid @enderror" id="phone" placeholder="Введите номер" autocomplete="on">
                     </div>
                     <div class="form-group">
                         <label for="url_photo">Добавить фото</label>
-                        <input type="text" class="form-control  @error('url_photo') is-invalid @enderror" id="url_photo" placeholder="Введите url фото">
+                        <input type="text" class="form-control  @error('url_photo') is-invalid @enderror" id="url_photo" placeholder="Введите url фото" autocomplete="on">
                     </div>
                 </div>
                 <div class="card-footer">

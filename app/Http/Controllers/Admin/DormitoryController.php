@@ -6,7 +6,7 @@ use App\Dormitories;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DormitorieController extends Controller
+class DormitoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -44,7 +44,6 @@ class DormitorieController extends Controller
             'url_photo' => 'nullable|text',
         ]);
         Dormitories::create($request->all());
-        //$request->session()->flash('success', 'Общежитие добавлено!');
         return redirect()->route('dormitories.index')->with('success', 'Общежитие добавлено!');
     }
 
@@ -77,8 +76,7 @@ class DormitorieController extends Controller
         ]);
         $dormitory = Dormitories::find($id);
         $dormitory->update($request->all());
-        //$request->session()->flash('success', 'Общежитие добавлено!');
-        return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id_dom])->with('success', 'Общежитие изменено!');
+        return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id_dom])->with('success', 'Изменения сохранены!');
     }
 
     /**
