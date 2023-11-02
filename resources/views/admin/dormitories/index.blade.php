@@ -58,8 +58,8 @@
                                             <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Title</th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Address</th>
                                             <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Phone</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">URL_photo</th>
-                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Action</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Photo</th>
+                                            <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Actions</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -68,12 +68,12 @@
                                                 <td class="dtr-control sorting_1">{{ $dormitory->title }}</td>
                                                 <td>{{ $dormitory->address }}</td>
                                                 <td>{{ $dormitory->phone }}</td>
-                                                <td>{{ $dormitory->url_photo }}</td>
+                                                <td><img src="{{ $dormitory->getImage() }}" alt="" class="img-thumbnail mt-2" width="200"></td>
                                                 <td>
-                                                    <a href="{{ route('dormitories.edit', ['dormitory' => $dormitory->id_dom]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                    <a href="{{ route('dormitories.edit', ['dormitory' => $dormitory->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    <form action="{{ route('dormitories.destroy', ['dormitory' => $dormitory->id_dom]) }}" method="post" class="float-left">
+                                                    <form action="{{ route('dormitories.destroy', ['dormitory' => $dormitory->id]) }}" method="post" class="float-left">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">

@@ -41,9 +41,12 @@ class DormitoryController extends Controller
             'title' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'url_photo' => 'nullable|text',
+            'photo' => 'nullable|image',
         ]);
-        Dormitories::create($request->all());
+        $data = $request->all();
+        $data['photo'] = Dormitories::uploadImage($request);
+        //dd($data);
+        Dormitories::create($data);
         return redirect()->route('dormitories.index')->with('success', 'Общежитие добавлено!');
     }
 
@@ -72,14 +75,17 @@ class DormitoryController extends Controller
             'title' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'url_photo' => 'nullable|text'
+            'photo' => 'nullable|image',
         ]);
         $dormitory = Dormitories::find($id);
-        $dormitory->update($request->all());
-        return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id_dom])->with('success', 'Изменения сохранены!');
+        $data = $request->all();
+        $data['photo'] = Dormitories::uploadImage($request, $request->photo);
+        //dd($data);
+        $dormitory->update($data);
+        return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id])->with('success', 'Изменения сохранены!');
     }
 
-    /**psrsrsrs
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

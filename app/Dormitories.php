@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class Dormitories extends Model
 {
-    protected $fillable = ['id_dom', 'title', 'address', 'phone', 'url_photo'];
+    protected $fillable = ['title', 'address', 'phone', 'photo'];
     public function staff() //возвращает персонал, работающий в указанном общежитии
     {
         return $this->hasMany(Staff::class, 'id_dom');
@@ -26,5 +28,27 @@ class Dormitories extends Model
     public function mashines() //возвращает машинки, находящиеся в этом общежитие
     {
         return $this->hasMany(Washing_machine::class, 'id_dom');
+    }
+    public static function uploadImage(Request $request, $image = null)
+    {
+        if ($request->hasFile('photo')) {
+            if ($image) {
+                Storage::delete($image);
+            }
+            if ($request->del_photo){
+                return null;
+            }
+            $folder = date('Y-m-d');
+            return $request->file('photo')->store("images/{$folder}");
+        }
+        return null;
+    }
+
+    public function getImage()
+    {
+        if (!$this->photo) {
+            return asset("no-image.png");
+        }
+        return asset("uploads/{$this->photo}");
     }
 }
