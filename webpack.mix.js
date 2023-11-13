@@ -12,6 +12,8 @@ const mix = require('laravel-mix');
  */
 //Объединяем стили в один файл
 mix.styles([
+    'resources/assets/admin/plugins/select2/css/select2.css',
+    'resources/assets/admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.css',
     'resources/assets/admin/plugins/fontawesome-free/css/all.min.css',
     'resources/assets/admin/css/adminlte.min.css'
 ], 'public/assets/admin/css/admin.css');
@@ -19,8 +21,10 @@ mix.styles([
 mix.scripts([
     'resources/assets/admin/plugins/jquery/jquery.min.js',
     'resources/assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js',
+    'resources/assets/admin/plugins/select2/js/select2.full.js',
     'resources/assets/admin/js/adminlte.min.js',
-    'resources/assets/admin/js/demo.js'
+    'resources/assets/admin/js/demo.js',
+    'resources/assets/admin/plugins/bs-custom-file-input/bs-custom-file-input.js'
 ], 'public/assets/admin/js/admin.js');
 //Копируем папку со шрифтами и папку img чтобы не переписывать пути в стилях и скриптах в нужное место по иерархии
 mix.copyDirectory('resources/assets/admin/plugins/fontawesome-free/webfonts', 'public/assets/admin/webfonts');

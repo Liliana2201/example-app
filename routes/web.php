@@ -20,4 +20,10 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin','namespace'=> 'Admin'], function () {
     Route::get('/','MainController@index')->name('admin.index');
     Route::resource('/dormitories', 'DormitoryController');
+    Route::resource('/condition_rooms', 'ConditionController');
+    Route::resource('/rooms', 'RoomController');
+    Route::resource('/posts', 'PostController');
+    Route::resource('/staff', 'StaffController');
+    Route::resource('/properties', 'PropertyController');
+    Route::resource('/students', 'StudentController');
 });

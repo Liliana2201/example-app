@@ -17,17 +17,17 @@ class Dormitories extends Model
     {
         return $this->hasMany(Rooms::class, 'id_dom');
     }
-    public function property() //возвращает имущество, находящееся в этом общежитии
+    public function properties() //возвращает имущество, находящееся в этом общежитии
     {
-        return $this->hasMany(Property::class, 'id_dom');
+        return $this->hasMany(Properties::class, 'id_dom');
     }
     public function news() //возвращает новости, касающиеся этого общежития
     {
         return $this->hasMany(News::class, 'id_dom');
     }
-    public function mashines() //возвращает машинки, находящиеся в этом общежитие
+    public function washing_machines() //возвращает машинки, находящиеся в этом общежитие
     {
-        return $this->hasMany(Washing_machine::class, 'id_dom');
+        return $this->hasMany(Washing_machines::class, 'id_dom');
     }
     public static function uploadImage(Request $request, $image = null)
     {

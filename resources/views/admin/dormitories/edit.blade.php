@@ -36,7 +36,7 @@
                         <label for="url_photo">Добавить фото</label>
                         <div class="custom-file">
                             <input type="file" name="photo" id="photo" class="custom-file-input">
-                            <label class="custom-file-label" for="photo">Выберите файл</label>
+                            <label class="custom-file-label" for="photo" id="label">Выберите файл</label>
                         </div>
                     </div>
                     <div><img id="image" src="{{ $dormitory->getImage() }}" alt="" class="img-thumbnail mt-2 mb-2" width="200"></div>
@@ -55,6 +55,7 @@
         document.getElementById('photo').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image').src = src
+            //document.getElementById('label').innerHTML = this.files[0].name;
         }
     </script>
 @endsection

@@ -14,10 +14,11 @@ class CreatePropertiesTable extends Migration
     public function up()
     {
         Schema::create('properties', function (Blueprint $table) {
-            $table->increments('id_prop'); //id
+            $table->increments('id'); //id
             $table->integer('id_dom')->unsigned(); //id общежития
-            $table->string('title_prop'); //название имущества
-            $table->integer('count')->default(0); //количество
+            $table->string('title'); //название имущества
+            $table->string('mark'); //маркировка
+            $table->timestamps();
         });
     }
 

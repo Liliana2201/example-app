@@ -65,16 +65,12 @@
         }
     });
     $('ul.nav-treeview a').filter(function() {
-        let location = window.location.protocol + '//' + window.location.host + window.location.pathname;
-        let link = this.href;
-        if(link == location) {
-            $(this).addClass('active');
-        }
-    });
-    $('ul.nav-treeview a').filter(function() {
         var rgx = new RegExp($(this).attr("href"), "gi");
         return url.match(rgx);
-    }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open');
+    }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').addClass('active');
+    $(document).ready(function() {
+        bsCustomFileInput.init();
+    });
 </script>
 </body>
 </html>

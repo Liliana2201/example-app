@@ -12,6 +12,6 @@ class Types_applications extends Model
     }
     public function post() //возвращаем должность, которой отправляется заявка этой категории
     {
-        return $this->belongsTo(Post::class, 'id_post');
+        return $this->belongsTo(Posts::class, 'id_post');
     }
 }

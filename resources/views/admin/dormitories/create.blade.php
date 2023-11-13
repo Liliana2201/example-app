@@ -36,7 +36,7 @@
                         <div class="input-group">
                             <div class="custom-file">
                                 <input type="file" name="photo" id="photo" class="custom-file-input">
-                                <label class="custom-file-label" for="photo">Выберите файл</label>
+                                <label class="custom-file-label" for="photo" id="label">Выберите файл</label>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,8 @@
         document.getElementById('photo').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image').src = src
-            document.getElementById('del_photo').disabled = "enable";
+            //document.getElementById('del_photo').disabled = "enable";
+            document.getElementById('label').innerHTML = this.files[0].name;
         }
     </script>
 @endsection

@@ -14,8 +14,9 @@ class CreateConditionRoomsTable extends Migration
     public function up()
     {
         Schema::create('condition_rooms', function (Blueprint $table) {
-            $table->increments('id_cound'); //id
-            $table->string('title_cound'); //наименование состояние
+            $table->increments('id'); //id
+            $table->string('title'); //наименование состояние
+            $table->timestamps();
         });
     }
 

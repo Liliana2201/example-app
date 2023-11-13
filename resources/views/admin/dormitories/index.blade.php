@@ -45,8 +45,15 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div id="example1_filter" class="dataTables_filter">
-                                        <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1"></label>
+                                    <div id="example1_filter" class="dataTables_filter mt-2 mb-2">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <label>Search:</label>
+                                            </div>
+                                            <div class="col-10">
+                                                <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

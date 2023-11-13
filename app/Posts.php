@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Posts extends Model
 {
+    protected $fillable = ['title'];
     public function types_application() //возвращает категорию заявок, которая относится к этой должности
     {
         return $this->hasOne($this->types_applications(), 'id_post');

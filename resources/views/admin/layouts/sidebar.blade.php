@@ -66,6 +66,144 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Имущество
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('properties.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список имущества</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('properties.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новое</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Состояния комнат
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('condition_rooms.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список состояний</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('condition_rooms.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новое</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Комнаты
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('rooms.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список комнат</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('rooms.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Должности
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('posts.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список должностей</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('posts.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Сотрудники
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('staff.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список сотрудников</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('staff.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить нового</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Студенты
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('students.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список студентов</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('students.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить нового</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </nav>

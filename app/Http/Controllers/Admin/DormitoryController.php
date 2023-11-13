@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Dormitories;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DormitoryController extends Controller
 {
@@ -41,7 +42,7 @@ class DormitoryController extends Controller
             'title' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'photo' => 'nullable|image',
+            'photo' => 'image',
         ]);
         $data = $request->all();
         $data['photo'] = Dormitories::uploadImage($request);
@@ -75,12 +76,13 @@ class DormitoryController extends Controller
             'title' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'photo' => 'nullable|image',
+            'photo' => 'image',
         ]);
         $dormitory = Dormitories::find($id);
         $data = $request->all();
-        $data['photo'] = Dormitories::uploadImage($request, $request->photo);
-        //dd($data);
+        if ($file = Dormitories::uploadImage($request, $request->photo)){
+            $data['photo'] = $file;
+        }
         $dormitory->update($data);
         return redirect()->route('dormitories.index', ['dormitory' => $dormitory->id])->with('success', 'Изменения сохранены!');
     }
@@ -93,7 +95,9 @@ class DormitoryController extends Controller
      */
     public function destroy($id)
     {
-        Dormitories::destroy($id);
-        return redirect()->route('dormitories.index');
+        $dormitory = Dormitories::find($id);
+        Storage::delete($dormitory->photo);
+        $dormitory->delete();
+        return redirect()->route('dormitories.index')->with('success', 'Общежитие удалено');
     }
 }

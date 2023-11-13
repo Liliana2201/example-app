@@ -18,7 +18,7 @@ class CreateDormitoriesTable extends Migration
             $table->string('title'); //название
             $table->string('address'); //адрес общежития
             $table->char('phone'); //номер вахты
-            $table->string('photo')->nullable(); //ссылка на фото
+            $table->string('photo'); //ссылка на фото
             $table->timestamps();
         });
     }
