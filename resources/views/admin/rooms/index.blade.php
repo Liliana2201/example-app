@@ -75,7 +75,7 @@
                                             <td class="dtr-control sorting_1">{{ $room->dormitory->title }}</td>
                                             <td class="dtr-control sorting_1">{{ $room->number }}</td>
                                             <td class="dtr-control sorting_1">{{ $room->condition_room->title }}</td>
-                                            <td class="dtr-control sorting_1">{{ $room->properties->pluck('title')->join(', ') }}</td>
+                                            <td class="dtr-control sorting_1">{{ $room->properties->pluck('title')->join(', ') }}({{ $room->properties->pluck('mark')->join(', ') }})</td>
                                             <td>
                                                 <a href="{{ route('rooms.edit', ['room' => $room->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                                                     <i class="fas fa-pencil-alt"></i>

@@ -32,9 +32,6 @@ class Dormitories extends Model
     public static function uploadImage(Request $request, $image = null)
     {
         if ($request->hasFile('photo')) {
-            if ($image) {
-                Storage::delete($image);
-            }
             if ($request->del_photo){
                 return null;
             }

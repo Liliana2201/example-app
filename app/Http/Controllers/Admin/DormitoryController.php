@@ -79,8 +79,9 @@ class DormitoryController extends Controller
             'photo' => 'image',
         ]);
         $dormitory = Dormitories::find($id);
+        Storage::delete($dormitory->photo);
         $data = $request->all();
-        if ($file = Dormitories::uploadImage($request, $request->photo)){
+        if ($file = Dormitories::uploadImage($request)){
             $data['photo'] = $file;
         }
         $dormitory->update($data);

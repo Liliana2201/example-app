@@ -18,6 +18,7 @@ class RoomController extends Controller
      */
     public function index()
     {
+        //$properties = Properties::pluck('mark', 'id')->all();
         $rooms = Rooms::with('dormitory', 'condition_room', 'properties')->paginate(10);
         return view('admin.rooms.index', compact('rooms'));
     }

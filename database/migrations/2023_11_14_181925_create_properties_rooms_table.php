@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRoomsTable extends Migration
+class CreatePropertiesRoomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRoomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('properties_rooms', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->integer('id_dom')->unsigned(); //id общежития
-            $table->string('number'); // номер комнаты
-            $table->integer('id_cond')->unsigned(); // id состояния
+            $table->integer('rooms_id')->unsigned(); //id комнаты
+            $table->integer('properties_id')->unsigned(); // id имущества
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRoomsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('properties_rooms');
     }
 }

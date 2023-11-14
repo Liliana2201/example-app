@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rooms extends Model
 {
-    protected $fillable = ['id_dom', 'number', 'id_cond', 'id_prop'];
+    protected $fillable = ['id_dom', 'number', 'id_cond'];
     public function dormitory() //возвращает общежитие, в котором числится данная комната
     {
         return $this->belongsTo(Dormitories::class, 'id_dom');
@@ -17,6 +17,6 @@ class Rooms extends Model
     }
     public function properties() //возвращает имущество в этой комнате
     {
-        return $this->hasMany(Properties::class, 'id_prop');
+        return $this->belongsToMany(Properties::class)->withTimestamps();
     }
 }

@@ -56,7 +56,7 @@
         document.getElementById('photo').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image').src = src
-            //document.getElementById('del_photo').disabled = "enable";
+            document.getElementById('del_photo').disabled = "enable";
             document.getElementById('label').innerHTML = this.files[0].name;
         }
     </script>
