@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTypesApplicationsTable extends Migration
+class CreateNewsTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTypesApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('types_applications', function (Blueprint $table) {
+        Schema::create('news_tags', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->string('name_category'); //название категории
-            $table->integer('id_post')->unsigned(); //id должности, кому отправляется заявка
+            $table->integer('news_id')->unsigned(); //id комнаты
+            $table->integer('tags_id')->unsigned(); // id имущества
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTypesApplicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('types_applications');
+        Schema::dropIfExists('news_tags');
     }
 }

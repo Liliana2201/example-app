@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Types_applications extends Model
 {
+    protected $fillable = ['name_category', 'id_post'];
+    public $timestamps = false;
     public function applications() //возвращаем заявки, принадлежащие этой категории
     {
         return $this->hasMany(Applications::class, 'id_category');

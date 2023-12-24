@@ -16,7 +16,7 @@
             <div class="card-header">
                 <h3 class="card-title">Редактировать комнату "{{ $room->number }}" из "{{ $room->dormitory->title }}"</h3>
             </div>
-            <form role="form" method="post" action="{{ route('rooms.update', ['room' => $room->id]) }}}">
+            <form role="form" method="post" action="{{ route('rooms.update', ['room' => $room->id]) }}">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
@@ -44,8 +44,10 @@
                         <label for="properties">Имущество</label>
                         <select name="properties[]" id="properties" class="select2 @error('properties') is-invalid @enderror" multiple="multiple"
                                 data-placeholder="Выбор имущества" style="width: 100%;">
-                            @foreach($properties as $k => $v)
-                                <option value="{{ $k }}" @if(in_array($k, $room->properties->pluck('id')->all())) selected @endif>{{ $v }}</option>
+                            @foreach($room->properties as $property_room)
+                                @foreach($properties as $property)
+                                    <option value="{{ $property->id }}" @if($property->id == $property_room->id) selected @endif>{{ $property->title }}({{ $property->mark }})</option>
+                                @endforeach
                             @endforeach
                         </select>
                     </div>

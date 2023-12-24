@@ -5,7 +5,7 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <h1>Комнаты</h1>
+                <h1>Стиральные машины</h1>
             </div>
         </div><!-- /.container-fluid -->
     </section>
@@ -16,7 +16,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Список комнат</h3>
+                <h3 class="card-title">Список стиральных машин</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -28,8 +28,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <a href="{{ route('rooms.create') }}" class="btn btn-primary mb-3">Добавить комнату</a>
-                @if (count($rooms))
+                <a href="{{ route('washing_machines.create') }}" class="btn btn-primary mb-3">Добавить машинку</a>
+                @if (count($washing_machines))
                     <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
                         <div class="row">
                             <div class="col-sm-12 col-md-6">
@@ -62,33 +62,23 @@
                                 <table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
                                     <thead>
                                     <tr>
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Номер</th>
                                         <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Общежитие</th>
-                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Номер комнаты</th>
-                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Состояние</th>
-                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Имущество</th>
+                                        <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Последняя дата проверки</th>
                                         <th>Действия</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($rooms as $room)
+                                    @foreach ($washing_machines as $washing_machine)
                                         <tr class="odd">
-                                            <td class="dtr-control sorting_1">{{ $room->dormitory->title }}</td>
-                                            <td class="dtr-control sorting_1">{{ $room->number }}</td>
-                                            <td class="dtr-control sorting_1">{{ $room->condition_room->title }}</td>
-                                            <td class="dtr-control sorting_1">
-                                                @foreach($room->properties as $property_room)
-                                                    @foreach($properties as $property)
-                                                        @if($property->id == $property_room->id)
-                                                            {{ $property->title }}({{ $property->mark }});
-                                                        @endif
-                                                    @endforeach
-                                                @endforeach
-                                            </td>
+                                            <td class="dtr-control sorting_1">{{ $washing_machine->id }}</td>
+                                            <td class="dtr-control sorting_1">{{ $washing_machine->dormitory->title }}</td>
+                                            <td class="dtr-control sorting_1">{{ $washing_machine->date_check }}</td>
                                             <td>
-                                                <a href="{{ route('rooms.edit', ['room' => $room->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                <a href="{{ route('washing_machines.edit', ['washing_machine' => $washing_machine->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
-                                                <form action="{{ route('rooms.destroy', ['room' => $room->id]) }}" method="post" class="float-left">
+                                                <form action="{{ route('washing_machines.destroy', ['washing_machine' => $washing_machine->id]) }}" method="post" class="float-left">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
@@ -104,7 +94,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                {{ $rooms->links() }}
+                                {{ $washing_machines->links() }}
                             </div>
                         </div>
                         @else

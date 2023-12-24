@@ -15,7 +15,7 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->integer('id_room')->unsigned(); //id комнаты
+            $table->integer('room_id')->unsigned(); //id комнаты
             $table->string('surname'); //фамилия
             $table->string('name'); //имя
             $table->string('patronymic')->nullable(); //отчество
@@ -26,13 +26,12 @@ class CreateStudentsTable extends Migration
             $table->date('date_births'); //дата рождения
             $table->string('hometown'); //родной город
             $table->string('contract'); //ссылка на договор
-            $table->float('balance')->default(0); //баланс
+            $table->float('balance')->nullable()->default(0); //баланс
             $table->string('phone'); //телефон
             $table->string('email'); //почта
-            $table->integer('work_out')->default(0); //отработано часов
+            $table->integer('work_out')->nullable()->default(0); //отработано часов
             $table->date('date_flg'); //дата последней флюрографии
             $table->string('photo'); //ссылка на фото
-            $table->integer('id_prop')->unsigned(); //id имущества
             $table->timestamps();
         });
     }

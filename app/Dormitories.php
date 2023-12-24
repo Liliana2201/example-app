@@ -36,7 +36,7 @@ class Dormitories extends Model
                 return null;
             }
             $folder = date('Y-m-d');
-            return $request->file('photo')->store("images/{$folder}");
+            return $request->file('photo')->store("images/dormitories/{$folder}");
         }
         return null;
     }

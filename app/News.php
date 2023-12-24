@@ -3,15 +3,37 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
-    public function dormitorie() //возвращает общежитие, к которому относится новость
+    protected $fillable = ['id_dom', 'title_news', 'content', 'description', 'url_photo'];
+    public function dormitory() //возвращает общежитие, к которому относится новость
     {
         return $this->belongsTo(Dormitories::class, 'id_dom');
     }
     public function tags() //возвращает теги, к которым относится эта новость
     {
-        return $this->hasMany(Tags::class, 'id_tag');
+        return $this->belongsToMany(Tags::class)->withTimestamps();
+    }
+    public static function uploadImage(Request $request, $image = null)
+    {
+        if ($request->hasFile('url_photo')) {
+            if ($image) {
+                Storage::delete($image);
+            }
+            $folder = date('Y-m-d');
+            return $request->file('url_photo')->store("images/news/{$folder}");
+        }
+        return null;
+    }
+
+    public function getImage()
+    {
+        if (!$this->url_photo) {
+            return asset("no-image.png");
+        }
+        return asset("uploads/{$this->url_photo}");
     }
 }

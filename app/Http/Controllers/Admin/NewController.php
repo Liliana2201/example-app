@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Condition_rooms;
 use App\Dormitories;
 use App\Http\Controllers\Controller;
-use App\Properties;
-use App\Rooms;
+use App\News;
+use App\Tags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
-class RoomController extends Controller
+class NewController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Rooms::with('dormitory', 'condition_room', 'properties')->paginate(10);
-        $properties = Properties::all();
-        return view('admin.rooms.index', compact('rooms', 'properties'));
-
+        $news = News::with('dormitory', 'tags')->paginate(10);
+        $dormitories = Dormitories::all();
+        return view('admin.news.index', compact('news', 'dormitories'));
     }
 
     /**
@@ -31,10 +30,9 @@ class RoomController extends Controller
      */
     public function create()
     {
-        $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
         $dormitories = Dormitories::pluck('title', 'id')->all();
-        $properties = Properties::all();
-        return view('admin.rooms.create', compact('condition_rooms', 'dormitories', 'properties'));
+        $tags = Tags::pluck('name_tag', 'id')->all();
+        return view('admin.news.create', compact('dormitories', 'tags'));
     }
 
     /**
@@ -47,12 +45,17 @@ class RoomController extends Controller
     {
         $request->validate([
             'id_dom' => 'required|integer',
-            'number' => 'required',
-            'id_cond' => 'required|integer',
+            'title_news' => 'required',
+            'content' => 'required',
+            'description' => 'nullable|string',
+            'url_photo' => 'nullable|image',
         ]);
-        $rooms = Rooms::create($request->all());
-        $rooms->properties()->sync($request->properties);
-        return redirect()->route('rooms.index')->with('success', 'Комната добавлена!');
+        $data = $request->all();
+        $data['url_photo'] = News::uploadImage($request);
+        //dd($data);
+        $news = News::create($data);
+        $news->tags()->sync($request->tags);
+        return redirect()->route('news.index')->with('success', 'Новость добавлена!');
     }
 
     /**
@@ -63,11 +66,10 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        $room = Rooms::with('properties')->find($id);
-        $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
+        $new = News::with('tags')->find($id);
         $dormitories = Dormitories::pluck('title', 'id')->all();
-        $properties = Properties::all();
-        return view('admin.rooms.edit', compact('room', 'condition_rooms', 'dormitories', 'properties'));
+        $tags = Tags::pluck('name_tag', 'id')->all();
+        return view('admin.news.edit', compact('new', 'dormitories', 'tags'));
     }
 
     /**
@@ -81,13 +83,19 @@ class RoomController extends Controller
     {
         $request->validate([
             'id_dom' => 'required|integer',
-            'number' => 'required',
-            'id_cond' => 'required|integer',
+            'title_news' => 'required',
+            'content' => 'required',
+            'description' => 'nullable|string',
+            'url_photo' => 'nullable|image',
         ]);
-        $room = Rooms::find($id);
-        $room -> update($request->all());
-        $room->properties()->sync($request->properties);
-        return redirect()->route('rooms.index')->with('success', 'Изменения сохранены!');
+        $data = $request->all();
+        $new = News::find($id);
+        if ($file = News::uploadImage($request, $request->url_photo)){
+            $data['url_photo'] = $file;
+        }
+        $new->update($data);
+        $new->tags()->sync($request->tags);
+        return redirect()->route('news.index', ['new' => $new->id])->with('success', 'Изменения сохранены!');
     }
 
     /**
@@ -98,9 +106,9 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        $room = Rooms::find($id);
-        $room->properties()->sync([]);
-        $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'Комната удалена!');
+        $new = News::find($id);
+        Storage::delete($new->url_photo);
+        $new->delete();
+        return redirect()->route('news.index')->with('success', 'Новость удалена!');
     }
 }

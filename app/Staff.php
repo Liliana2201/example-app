@@ -24,7 +24,7 @@ class Staff extends Model
                 Storage::delete($image);
             }
             $folder = date('Y-m-d');
-            return $request->file('photo')->store("images/{$folder}");
+            return $request->file('photo')->store("images/staff/{$folder}");
         }
         return null;
     }

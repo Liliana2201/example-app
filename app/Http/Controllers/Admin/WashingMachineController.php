@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Condition_rooms;
 use App\Dormitories;
 use App\Http\Controllers\Controller;
-use App\Properties;
-use App\Rooms;
+use App\Washing_machines;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class WashingMachineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +16,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Rooms::with('dormitory', 'condition_room', 'properties')->paginate(10);
-        $properties = Properties::all();
-        return view('admin.rooms.index', compact('rooms', 'properties'));
-
+        $washing_machines = Washing_machines::with('dormitory')->paginate(10);
+        return view('admin.washing_machines.index', compact('washing_machines'));
     }
 
     /**
@@ -31,10 +27,8 @@ class RoomController extends Controller
      */
     public function create()
     {
-        $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
         $dormitories = Dormitories::pluck('title', 'id')->all();
-        $properties = Properties::all();
-        return view('admin.rooms.create', compact('condition_rooms', 'dormitories', 'properties'));
+        return view('admin.washing_machines.create', compact('dormitories'));
     }
 
     /**
@@ -47,12 +41,11 @@ class RoomController extends Controller
     {
         $request->validate([
             'id_dom' => 'required|integer',
-            'number' => 'required',
-            'id_cond' => 'required|integer',
+            'date_check' => 'required',
         ]);
-        $rooms = Rooms::create($request->all());
-        $rooms->properties()->sync($request->properties);
-        return redirect()->route('rooms.index')->with('success', 'Комната добавлена!');
+        //dd($request->all());
+        Washing_machines::create($request->all());
+        return redirect()->route('washing_machines.index')->with('success', 'Машинка добавлена!');
     }
 
     /**
@@ -63,11 +56,9 @@ class RoomController extends Controller
      */
     public function edit($id)
     {
-        $room = Rooms::with('properties')->find($id);
-        $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
+        $washing_machine = Washing_machines::find($id);
         $dormitories = Dormitories::pluck('title', 'id')->all();
-        $properties = Properties::all();
-        return view('admin.rooms.edit', compact('room', 'condition_rooms', 'dormitories', 'properties'));
+        return view('admin.washing_machines.edit', compact('washing_machine', 'dormitories'));
     }
 
     /**
@@ -81,13 +72,11 @@ class RoomController extends Controller
     {
         $request->validate([
             'id_dom' => 'required|integer',
-            'number' => 'required',
-            'id_cond' => 'required|integer',
+            'date_check' => 'required',
         ]);
-        $room = Rooms::find($id);
-        $room -> update($request->all());
-        $room->properties()->sync($request->properties);
-        return redirect()->route('rooms.index')->with('success', 'Изменения сохранены!');
+        $washing_machine = Washing_machines::find($id);
+        $washing_machine->update($request->all());
+        return redirect()->route('washing_machines.index', ['washing_machine' => $washing_machine->id])->with('success', 'Изменения сохранены!');
     }
 
     /**
@@ -98,9 +87,8 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        $room = Rooms::find($id);
-        $room->properties()->sync([]);
-        $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'Комната удалена!');
+        $washing_machines = Washing_machines::find($id);
+        $washing_machines->delete();
+        return redirect()->route('washing_machines.index')->with('success', 'Машинка удалена!');
     }
 }

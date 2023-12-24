@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
-use App\Properties;
+use App\Tags;
 use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Properties::with('dormitory', 'students', 'rooms')->paginate(10);
-        return view('admin.properties.index', compact('properties'));
+        $tags = Tags::paginate(10);
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -27,8 +26,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.create', compact('dormitories'));
+        return view('admin.tags.create');
     }
 
     /**
@@ -40,12 +38,10 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
-            'title' => 'required',
-            'mark' => 'required',
+            'name_tag' => 'required',
         ]);
-       Properties::create($request->all());
-       return redirect()->route('properties.index')->with('success', 'Имущество добавлено!');
+        Tags::create($request->all());
+        return redirect()->route('tags.index')->with('success', 'Тэг добавлен!');
     }
 
     /**
@@ -56,9 +52,8 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        $property = Properties::find($id);
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.edit', compact('dormitories', 'property'));
+        $tags = Tags::find($id);
+        return view('admin.tags.edit', compact('tags'));
     }
 
     /**
@@ -71,13 +66,11 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
-            'title' => 'required',
-            'mark' => 'required',
+            'name_tag' => 'required',
         ]);
-        $property = Properties::find($id);
-        $property -> update($request->all());
-        return redirect()->route('properties.index')->with('success', 'Изменения сохранены!');
+        $tag = Tags::find($id);
+        $tag -> update($request->all());
+        return redirect()->route('tags.index', ['tag' => $tag->id])->with('success', 'Изменения сохранены!');
     }
 
     /**
@@ -88,7 +81,8 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        Properties::destroy($id);
-        return redirect()->route('properties.index')->with('success', 'Имущество удалено!');
+        $tag = Tags::find($id);
+        $tag->delete();
+        return redirect()->route('tags.index')->with('success', 'Тэг удален!');
     }
 }

@@ -42,8 +42,8 @@
                     <div class="form-group">
                         <label for="properties">Имущество</label>
                         <select name="properties[]" id="properties" class="select2 select2-hidden-accessible" multiple="multiple" data-placeholder="Выбор имущества" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                            @foreach($properties as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
+                            @foreach($properties as $property)
+                                <option value="{{ $property->id }}">{{ $property->title }}({{ $property->mark }})</option>
                             @endforeach
                         </select>
 

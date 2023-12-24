@@ -18,12 +18,13 @@
             </div>
             <form role="form" method="post" action="{{ route('students.update', ['student' => $student->id]) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_room">Комната</label>
-                        <select class="form-control @error('id_room') is-invalid @enderror" id="id_room" name="id_room">
+                        <label for="room_id">Комната</label>
+                        <select class="form-control @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
                             @foreach($rooms as $k => $v)
-                                <option value="{{ $k }}" @if($k == $student->id_room) selected @endif>{{ $v }}</option>
+                                <option value="{{ $k }}" @if($k == $student->room_id) selected @endif>{{ $v }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -56,7 +57,7 @@
                         <input type="date" class="form-control @error('date_pas') is-invalid @enderror" id="date_pas" name="date_pas" value="{{ $student->date_pas }}">
                     </div>
                     <div class="form-group">
-                        <label for="date_births">Дата выдачи</label>
+                        <label for="date_births">Дата рождения</label>
                         <input type="date" class="form-control @error('date_births') is-invalid @enderror" id="date_births" name="date_births" value="{{ $student->date_births }}">
                     </div>
                     <div class="form-group">
@@ -102,7 +103,7 @@
                             </div>
                         </div>
                     </div>
-                    <div><img id="image" src="{{ $staff->getImage() }}" alt="" class="img-thumbnail mt-2 mb-2" width="200"></div>
+                    <div><img id="image" src="{{ $student->getImage() }}" alt="" class="img-thumbnail mt-2 mb-2" width="200"></div>
                     <div class="form-group">
                         <input type="button" class="btn btn-danger btn-sm" name="del_photo" onclick="return confirm('Подтвердите удаление')" value="Удалить фото" disabled="disabled"/>
                         <i class="fas fa-trash-alt"></i>
@@ -111,8 +112,10 @@
                         <label for="properties">Имущество</label>
                         <select name="properties[]" id="properties" class="select2 @error('properties') is-invalid @enderror" multiple="multiple"
                                 data-placeholder="Выбор имущества" style="width: 100%;">
-                            @foreach($properties as $k => $v)
-                                <option value="{{ $k }}" @if($k == $student->id_prop) selected @endif>{{ $v }}</option>
+                            @foreach($student->properties as $property_student)
+                                @foreach($properties as $property)
+                                    <option value="{{ $property->id }}" @if($property->id == $property_student->id) selected @endif>{{ $property->title }}({{ $property->mark }})</option>
+                                @endforeach
                             @endforeach
                         </select>
                     </div>
@@ -127,13 +130,10 @@
         document.getElementById('photo').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image').src = src
-            //document.getElementById('del_photo').disabled = "enable";
-            //document.getElementById('label').innerHTML = this.files[0].name;
         }
         document.getElementById('contract').onchange = function () {
             var href = URL.createObjectURL(this.files[0])
             document.getElementById('file').href = href
-            //document.getElementById('label').innerHTML = this.files[0].name;
         }
     </script>
 @endsection

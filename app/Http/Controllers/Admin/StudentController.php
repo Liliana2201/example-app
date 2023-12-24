@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Contracts;
 use App\Http\Controllers\Controller;
 use App\Properties;
 use App\Rooms;
@@ -19,8 +18,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Students::with('room', 'property')->paginate(10);
-        return view('admin.students.index', compact('students'));
+        $students = Students::with('room', 'properties')->paginate(10);
+        $properties = Properties::all();
+        return view('admin.students.index', compact('students', 'properties'));
     }
 
     /**
@@ -31,7 +31,7 @@ class StudentController extends Controller
     public function create()
     {
         $rooms = Rooms::pluck('number', 'id')->all();
-        $properties = Properties::pluck('title', 'id')->all();
+        $properties = Properties::all();
         return view('admin.students.create', compact('rooms', 'properties'));
     }
 
@@ -44,7 +44,7 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_room' => 'required|integer',
+            'room_id' => 'required|integer',
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'nullable|string',
@@ -55,18 +55,17 @@ class StudentController extends Controller
             'date_births' => 'required|date',
             'hometown' => 'required',
             'contract' => 'required|file',
-            'balance' => 'numeric',
             'phone' => 'required|numeric',
             'email' => 'required|email',
-            'work_out' => 'required|integer',
             'date_flg' => 'required|date',
-            'id_prop' => 'required|integer',
             'photo' => 'required|image',
         ]);
         $data = $request->all();
         $data['photo'] = Students::uploadImage($request);
+        $data['contract'] = Students::uploadContract($request);
         //dd($data);
-        Students::create($data);
+        $students = Students::create($data);
+        $students->properties()->sync($request->properties);
         return redirect()->route('students.index')->with('success', 'Студент добавлен!');
     }
 
@@ -78,9 +77,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $student = Students::find($id);
-        $rooms = Rooms::pluck('title', 'id')->all();
-        $properties = Properties::pluck('title', 'id')->all();
+        $student = Students::with('properties')->find($id);
+        $rooms = Rooms::pluck('number', 'id')->all();
+        $properties = Properties::all();
         return view('admin.students.edit', compact('student', 'rooms', 'properties'));
     }
 
@@ -94,7 +93,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_room' => 'required|integer',
+            'room_id' => 'required|integer',
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'nullable|string',
@@ -104,14 +103,11 @@ class StudentController extends Controller
             'date_pas' => 'required',
             'date_births' => 'required',
             'hometown' => 'required',
-            'contract' => 'required|file',
-            'balance' => 'required',
+            'contract' => 'file',
             'phone' => 'required',
             'email' => 'required',
-            'work_out' => 'required',
             'date_flg' => 'required',
-            'id_prop' => 'required|integer',
-            'photo' => 'required|image',
+            'photo' => 'image',
         ]);
         $student = Students::find($id);
         $data = $request->all();
@@ -119,8 +115,12 @@ class StudentController extends Controller
         if ($file = Students::uploadImage($request, $request->photo)){
             $data['photo'] = $file;
         }
+        if ($file = Students::uploadContract($request, $request->contract)){
+            $data['contract'] = $file;
+        }
         //dd($data);
         $student->update($data);
+        $student->properties()->sync($request->properties);
         return redirect()->route('students.index', ['student' => $student->id])->with('success', 'Изменения сохранены!');
     }
 
@@ -134,6 +134,7 @@ class StudentController extends Controller
     {
         $student = Students::find($id);
         Storage::delete($student->photo);
+        Storage::delete($student->contract);
         $student->delete();
         return redirect()->route('students.index')->with('success', 'Студент удален!');
     }

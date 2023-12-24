@@ -104,6 +104,15 @@
                                             <td>{{ $student->date_flg }}</td>
                                             <td><img src="{{ $student->getImage() }}" alt="" class="img-thumbnail mt-2" width="200"></td>
                                             <td>
+                                                @foreach($student->properties as $property_student)
+                                                    @foreach($properties as $property)
+                                                        @if($property->id == $property_student->id)
+                                                            {{ $property->title }}({{ $property->mark }});
+                                                        @endif
+                                                    @endforeach
+                                                @endforeach
+                                            </td>
+                                            <td>
                                                 <a href="{{ route('students.edit', ['student' => $student->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                                                     <i class="fas fa-pencil-alt"></i>
                                                 </a>
@@ -115,7 +124,6 @@
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td>{{ $student->properties->pluck('title')->join(', ') }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>

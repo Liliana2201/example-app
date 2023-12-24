@@ -204,6 +204,144 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Категории заявок
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('types_applications.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список категорий</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('types_applications.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Заявки
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('applications.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список заявок</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('applications.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Стиральные машины
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('washing_machines.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список машин</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('washing_machines.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Стирки
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('laundries.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список стирок</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('laundries.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Тэги
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('tags.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список тэгов</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('tags.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новый</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Новости
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('news.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Список новостей</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('news.create') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Добавить новую</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
         </nav>

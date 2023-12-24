@@ -20,8 +20,8 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_room">Комната</label>
-                        <select class="form-control @error('id_room') is-invalid @enderror" id="id_room" name="id_room">
+                        <label for="room_id">Комната</label>
+                        <select class="form-control @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
                             @foreach($rooms as $k => $v)
                                 <option value="{{ $k }}">{{ $v }}</option>
                             @endforeach
@@ -56,7 +56,7 @@
                         <input type="date" class="form-control @error('date_pas') is-invalid @enderror" id="date_pas" name="date_pas">
                     </div>
                     <div class="form-group">
-                        <label for="date_births">Дата выдачи</label>
+                        <label for="date_births">Дата рождения</label>
                         <input type="date" class="form-control @error('date_births') is-invalid @enderror" id="date_births" name="date_births">
                     </div>
                     <div class="form-group">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div><a id="file" href="{{ $student->getContract() }}">{{ $student->contract }}</a></div>
+                        <div><a id="file" href=""></a></div>
                     <div class="form-group">
                         <label for="balance">Баланс</label>
                         <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance" name="balance" placeholder="0">
@@ -87,7 +87,7 @@
                     </div>
                     <div class="form-group">
                         <label for="work_out">Отработано часов</label>
-                        <input type="number" class="form-control @error('work_out') is-invalid @enderror" id="work_out" name="work_out" placeholder="Введите электронную почту">
+                        <input type="number" class="form-control @error('work_out') is-invalid @enderror" id="work_out" name="work_out" placeholder="0">
                     </div>
                     <div class="form-group">
                         <label for="date_flg">Дата последней флюрографии</label>
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div><img id="image" src="{{ $student->getImage() }}" alt="" class="img-thumbnail mt-2 mb-2" width="200"></div>
+                        <div><img id="image" src="{{ asset("no-image.png") }}" alt="" class="img-thumbnail mt-2 mb-2" width="200"></div>
                     <div class="form-group">
                         <input type="button" class="btn btn-danger btn-sm" name="del_photo" onclick="return confirm('Подтвердите удаление')" value="Удалить фото" disabled="disabled"/>
                         <i class="fas fa-trash-alt"></i>
@@ -111,8 +111,8 @@
                         <label for="properties">Имущество</label>
                         <select name="properties[]" id="properties" class="select2 @error('properties') is-invalid @enderror" multiple="multiple"
                                 data-placeholder="Выбор имущества" style="width: 100%;">
-                            @foreach($properties as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
+                            @foreach($properties as $property)
+                                <option value="{{ $property->id }}">{{ $property->title }}({{ $property->mark }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -127,13 +127,10 @@
         document.getElementById('photo').onchange = function () {
             var src = URL.createObjectURL(this.files[0])
             document.getElementById('image').src = src
-            //document.getElementById('del_photo').disabled = "enable";
-            //document.getElementById('label').innerHTML = this.files[0].name;
         }
         document.getElementById('contract').onchange = function () {
             var href = URL.createObjectURL(this.files[0])
             document.getElementById('file').href = href
-            //document.getElementById('label').innerHTML = this.files[0].name;
         }
     </script>
 @endsection

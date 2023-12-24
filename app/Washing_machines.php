@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Washing_machines extends Model
 {
-    public function laundry() //возвращает стирки на этой машинке
+    protected $fillable = ['id_dom', 'date_check'];
+    public $timestamps = false;
+    public function laundries() //возвращает стирки на этой машинке
     {
         return $this->hasMany(Laundries::class, 'id_mash');
     }
-    public function dormitorie() //возвращает общежитие, в котором находится эта машинка
+    public function dormitory() //возвращает общежитие, в котором находится эта машинка
     {
         return $this->belongsTo(Dormitories::class, 'id_dom');
     }

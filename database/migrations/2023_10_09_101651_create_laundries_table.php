@@ -14,7 +14,7 @@ class CreateLaundriesTable extends Migration
     public function up()
     {
         Schema::create('laundries', function (Blueprint $table) {
-            $table->increments('id_wash'); //id
+            $table->increments('id'); //id
             $table->integer('id_mash')->unsigned(); //номер машинки
             $table->date('date_wash'); //дата стирки
             $table->time('time_wash'); //время стирки

@@ -92,7 +92,7 @@ class StaffController extends Controller
             'office' => 'required',
             'phone' => 'required',
             'email' => 'required',
-            'photo' => 'required|image',
+            'photo' => 'image',
         ]);
         $staff = Staff::find($id);
         $data = $request->all();

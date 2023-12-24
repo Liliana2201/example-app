@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
-use App\Properties;
+use App\Posts;
+use App\Types_applications;
 use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class TypeApplicationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Properties::with('dormitory', 'students', 'rooms')->paginate(10);
-        return view('admin.properties.index', compact('properties'));
+        $types_applications = Types_applications::with('post')->paginate(10);
+        return view('admin.types_applications.index', compact('types_applications'));
     }
 
     /**
@@ -27,8 +27,8 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.create', compact('dormitories'));
+        $posts = Posts::pluck('title', 'id')->all();
+        return view('admin.types_applications.create', compact('posts'));
     }
 
     /**
@@ -40,12 +40,11 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
-            'title' => 'required',
-            'mark' => 'required',
+            'name_category' => 'required',
+            'id_post' => 'required|integer',
         ]);
-       Properties::create($request->all());
-       return redirect()->route('properties.index')->with('success', 'Имущество добавлено!');
+        Types_applications::create($request->all());
+        return redirect()->route('types_applications.index')->with('success', 'Категория добавлена!');
     }
 
     /**
@@ -56,9 +55,9 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        $property = Properties::find($id);
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.edit', compact('dormitories', 'property'));
+        $types_application = Types_applications::find($id);
+        $posts = Posts::pluck('title', 'id')->all();
+        return view('admin.types_applications.edit', compact('types_application', 'posts'));
     }
 
     /**
@@ -71,13 +70,12 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
-            'title' => 'required',
-            'mark' => 'required',
+            'name_category' => 'required',
+            'id_post' => 'required|integer',
         ]);
-        $property = Properties::find($id);
-        $property -> update($request->all());
-        return redirect()->route('properties.index')->with('success', 'Изменения сохранены!');
+        $types_application = Types_applications::find($id);
+        $types_application -> update($request->all());
+        return redirect()->route('types_applications.index', ['types_application' => $types_application->id])->with('success', 'Изменения сохранены!');
     }
 
     /**
@@ -88,7 +86,8 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        Properties::destroy($id);
-        return redirect()->route('properties.index')->with('success', 'Имущество удалено!');
+        $types_application = Types_applications::find($id);
+        $types_application->delete();
+        return redirect()->route('types_applications.index')->with('success', 'Категория удалена!');
     }
 }

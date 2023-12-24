@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Properties extends Model
 {
     protected $fillable = ['id_dom', 'title', 'mark'];
-    public function room() //возвращает комнату, в которой находится это имущество
+    public function rooms() //возвращает комнату, в которой находится это имущество
     {
-        return $this->belongsTo(Rooms::class, 'id_prop');
+        return $this->belongsToMany(Rooms::class);
     }
-    public function student() //возвращает студента, у которого находится это имущество
+    public function students() //возвращает студента, у которого находится это имущество
     {
-        return $this->belongsTo(Students::class, 'id_prop');
+        return $this->belongsToMany(Students::class);
     }
     public function dormitory() //возвращает общежитие, в котором находится это имущество
     {

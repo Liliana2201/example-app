@@ -26,4 +26,10 @@ Route::group(['prefix'=>'admin','namespace'=> 'Admin'], function () {
     Route::resource('/staff', 'StaffController');
     Route::resource('/properties', 'PropertyController');
     Route::resource('/students', 'StudentController');
+    Route::resource('/types_applications', 'TypeApplicationController');
+    Route::resource('/applications', 'ApplicationController');
+    Route::resource('/washing_machines', 'WashingMachineController');
+    Route::resource('/laundries', 'LaundryController');
+    Route::resource('/tags', 'TagController');
+    Route::resource('/news', 'NewController');
 });
