@@ -36,6 +36,14 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
+                    <a href="{{ route('register.create') }}" class="nav-link">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Зарегистрировать SMM
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('admin.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-home"></i>
                         <p>

@@ -15,9 +15,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-Route::group(['prefix'=>'admin','namespace'=> 'Admin'], function () {
+Route::get('/register', 'UserController@create')->name('register.create');
+Route::post('/register', 'UserController@store')->name('register.store');
+Route::get('/login', 'UserController@loginForm')->name('login.create');
+Route::post('/login', 'UserController@login')->name('login');
+Route::get('/logout', 'UserController@logout')->name('logout');
+
+Route::group(['prefix'=>'admin','namespace'=> 'Admin', 'middleware' => 'admin'], function () {
     Route::get('/','MainController@index')->name('admin.index');
     Route::resource('/dormitories', 'DormitoryController');
     Route::resource('/condition_rooms', 'ConditionController');
@@ -33,3 +39,4 @@ Route::group(['prefix'=>'admin','namespace'=> 'Admin'], function () {
     Route::resource('/tags', 'TagController');
     Route::resource('/news', 'NewController');
 });
+

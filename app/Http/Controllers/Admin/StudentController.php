@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Properties;
 use App\Rooms;
 use App\Students;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -64,8 +65,25 @@ class StudentController extends Controller
         $data['photo'] = Students::uploadImage($request);
         $data['contract'] = Students::uploadContract($request);
         //dd($data);
-        $students = Students::create($data);
-        $students->properties()->sync($request->properties);
+        $student = Students::create($data);
+
+        $users = Users::all();
+        $is_valid = True;
+        foreach ($users as $user) {
+            if($student->email == $user->email)
+            {
+                $is_valid = False;
+            }
+        }
+        if ($is_valid)
+        {
+            Users::create([
+                'name' => $student->name,
+                'email' => $student->email,
+                'password' => bcrypt($student->passport),
+            ]);
+        }
+        $student->properties()->sync($request->properties);
         return redirect()->route('students.index')->with('success', 'Студент добавлен!');
     }
 
@@ -120,6 +138,17 @@ class StudentController extends Controller
         }
         //dd($data);
         $student->update($data);
+
+        /*придумать как быть с изменением имени, почты и/или данных паспорта
+         * if ($is_valid)
+        {
+            Users::create([
+                'name' => $student->name,
+                'email' => $student->email,
+                'password' => bcrypt($student->passport),
+            ]);
+        }*/
+
         $student->properties()->sync($request->properties);
         return redirect()->route('students.index', ['student' => $student->id])->with('success', 'Изменения сохранены!');
     }

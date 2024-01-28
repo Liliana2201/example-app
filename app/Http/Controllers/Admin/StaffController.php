@@ -6,6 +6,7 @@ use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\Posts;
 use App\Staff;
+use App\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -56,7 +57,30 @@ class StaffController extends Controller
         $data = $request->all();
         $data['photo'] = Staff::uploadImage($request);
         //dd($data);
-        Staff::create($data);
+        $staff = Staff::create($data);
+
+        $users = Users::all();
+        $is_valid = True;
+        foreach ($users as $user) {
+            if($staff->email == $user->email)
+            {
+                $is_valid = False;
+            }
+        }
+        if ($is_valid)
+        {
+            $user = Users::create([
+                'name' => $staff->name,
+                'email' => $staff->email,
+                'password' => bcrypt($staff->phone),
+            ]);
+            if (Posts::find($data['id_post'])->title == "Администратор")
+            {
+                $user->is_admin = 1;
+                $user->update();
+            }
+        }
+
         return redirect()->route('staff.index')->with('success', 'Сотрудник добавлен!');
     }
 
