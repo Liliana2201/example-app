@@ -21,14 +21,6 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}" @if($k == $new->id_dom) selected  @endif>{{ $v }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="title_news">Заголовок</label>
                         <input type="text" class="form-control @error('title_news') is-invalid @enderror" id="title_news" name="title_news" value="{{ $new->title_news }}">
                     </div>

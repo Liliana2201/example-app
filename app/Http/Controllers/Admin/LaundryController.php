@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Laundries;
 use App\Students;
 use App\Washing_machines;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LaundryController extends Controller
@@ -20,6 +21,12 @@ class LaundryController extends Controller
         $laundries = Laundries::with('machine', 'student')->paginate(10);
         $washing_machines = Washing_machines::all();
         $students = Students::all();
+        foreach ($laundries as $laundry) {
+            $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInMonths($laundry->created_at);
+            if ($dif >= 3) {
+                $laundry->delete();
+            }
+        }
         return view('admin.laundries.index', compact('laundries', 'washing_machines', 'students'));
     }
 
@@ -51,7 +58,7 @@ class LaundryController extends Controller
         ]);
         $data = $request->all();
         Laundries::create($data);
-        return redirect()->route('laundries.index')->with('success', 'Стирка добавлен!');
+        return redirect()->route('laundries.index')->with('success', 'Стирка добавлена!');
     }
 
     /**

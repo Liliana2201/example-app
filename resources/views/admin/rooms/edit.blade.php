@@ -14,19 +14,15 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Редактировать комнату "{{ $room->number }}" из "{{ $room->dormitory->title }}"</h3>
+                <h3 class="card-title">Редактировать комнату "{{ $room->number }}"</h3>
             </div>
             <form role="form" method="post" action="{{ route('rooms.update', ['room' => $room->id]) }}">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}" @if($k == $room->id_dom) selected @endif>{{ $v }}</option>
-                            @endforeach
-                        </select>
+                        <label for="level">Этаж</label>
+                        <input type="text" class="form-control @error('level') is-invalid @enderror" id="level" name="level" value="{{ $room->level }}">
                     </div>
                     <div class="form-group">
                         <label for="number">Номер комнаты</label>
@@ -39,6 +35,14 @@
                                 <option value="{{ $k }}" @if($k == $room->id_cond) selected @endif>{{ $v }}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="num_beds">Количество мест</label>
+                        <input type="text" class="form-control @error('num_beds') is-invalid @enderror" id="num_beds" name="num_beds" value="{{ $room->num_beds }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="square">Площадь</label>
+                        <input type="text" class="form-control @error('square') is-invalid @enderror" id="square" name="square" value="{{ $room->square }}">
                     </div>
                     <div class="form-group">
                         <label for="properties">Имущество</label>
@@ -54,6 +58,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('rooms.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

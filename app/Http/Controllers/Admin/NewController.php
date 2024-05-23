@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\News;
 use App\Tags;
@@ -18,9 +17,8 @@ class NewController extends Controller
      */
     public function index()
     {
-        $news = News::with('dormitory', 'tags')->paginate(10);
-        $dormitories = Dormitories::all();
-        return view('admin.news.index', compact('news', 'dormitories'));
+        $news = News::with( 'tags')->paginate(10);
+        return view('admin.news.index', compact('news'));
     }
 
     /**
@@ -30,9 +28,8 @@ class NewController extends Controller
      */
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
         $tags = Tags::pluck('name_tag', 'id')->all();
-        return view('admin.news.create', compact('dormitories', 'tags'));
+        return view('admin.news.create', compact('tags'));
     }
 
     /**
@@ -44,7 +41,6 @@ class NewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
             'title_news' => 'required',
             'content' => 'required',
             'description' => 'nullable|string',
@@ -67,9 +63,8 @@ class NewController extends Controller
     public function edit($id)
     {
         $new = News::with('tags')->find($id);
-        $dormitories = Dormitories::pluck('title', 'id')->all();
         $tags = Tags::pluck('name_tag', 'id')->all();
-        return view('admin.news.edit', compact('new', 'dormitories', 'tags'));
+        return view('admin.news.edit', compact('new', 'tags'));
     }
 
     /**
@@ -82,7 +77,6 @@ class NewController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
             'title_news' => 'required',
             'content' => 'required',
             'description' => 'nullable|string',
@@ -108,6 +102,7 @@ class NewController extends Controller
     {
         $new = News::find($id);
         Storage::delete($new->url_photo);
+        $new->tags()->sync([]);
         $new->delete();
         return redirect()->route('news.index')->with('success', 'Новость удалена!');
     }

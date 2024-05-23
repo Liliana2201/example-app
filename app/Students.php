@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class Students extends Model
 {
-    protected $fillable = ['room_id', 'surname', 'name', 'patronymic', 'group', 'passport', 'issued_pas', 'date_pas',
-        'date_births', 'hometown', 'contract', 'balance', 'phone', 'email', 'work_out', 'date_flg', 'id_prop', 'photo'];
+    protected $fillable = ['room_id', 'surname', 'name', 'patronymic', 'status', 'form_edu', 'group', 'passport', 'issued_pas', 'date_pas',
+        'date_births', 'hometown', 'contract', 'balance', 'phone', 'email', 'work_out', 'date_flg', 'photo', 'family', 'notes', 'live',
+        'date_del'];
     public function applications() //возвращаем заявки этого студента
     {
         return $this->belongsToMany(Applications::class, 'id_stud');

@@ -10,6 +10,6 @@ class Tags extends Model
     public $timestamps = false;
     public function news() //возвращает новости, относяшиеся к этому тэгу
     {
-        return $this->hasMany(News::class, 'id_tag');
+        return $this->belongsToMany(News::class)->withTimestamps();
     }
 }

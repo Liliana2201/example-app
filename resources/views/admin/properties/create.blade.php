@@ -20,11 +20,11 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
+                        <label for="category">Категория</label>
+                        <select class="form-control @error('category') is-invalid @enderror" id="category" name="category">
+                            <option value="Комнаты">Комнаты</option>
+                            <option value="Студенты">Студенты</option>
+                            <option value="Постельное">Постельное</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -34,6 +34,10 @@
                     <div class="form-group">
                         <label for="mark">Маркировка</label>
                         <input type="text" class="form-control @error('mark') is-invalid @enderror" id="mark" name="mark" placeholder="Введите марку">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Год</label>
+                        <input type="number" min="1900" max="2099" step="1" class="form-control @error('year') is-invalid @enderror" id="year" name="year">
                     </div>
                 </div>
                 <div class="card-footer">

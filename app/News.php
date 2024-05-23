@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
-    protected $fillable = ['id_dom', 'title_news', 'content', 'description', 'url_photo'];
-    public function dormitory() //возвращает общежитие, к которому относится новость
-    {
-        return $this->belongsTo(Dormitories::class, 'id_dom');
-    }
+    protected $fillable = ['title_news', 'content', 'description', 'url_photo'];
+
     public function tags() //возвращает теги, к которым относится эта новость
     {
         return $this->belongsToMany(Tags::class)->withTimestamps();

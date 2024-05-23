@@ -9,14 +9,6 @@
             <div class="card-body">
                 @csrf
                 <div class="form-group">
-                    <label for="id_dom">Общежитие</label>
-                    <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                        @foreach($dormitories as $k => $v)
-                            <option value="{{ $k }}">{{ $v }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="user">Студент</label>
                     <select class="form-control @error('user') is-invalid @enderror" id="user" name="user">
                         @foreach($students as $student)

@@ -20,16 +20,12 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                        </select>
+                        <label for="level">Этаж</label>
+                        <input type="text" class="form-control @error('level') is-invalid @enderror" id="level" name="level" placeholder="Введите этаж">
                     </div>
                     <div class="form-group">
                         <label for="number">Номер комнаты</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="number" name="number" placeholder="Введите номер комнаты">
+                        <input type="text" class="form-control @error('number') is-invalid @enderror" id="number" name="number" placeholder="Введите номер комнаты">
                     </div>
                     <div class="form-group">
                         <label for="id_cond">Состояние</label>
@@ -40,13 +36,20 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="num_beds">Количество мест</label>
+                        <input type="text" class="form-control @error('num_beds') is-invalid @enderror" id="num_beds" name="num_beds" placeholder="Введите количество мест">
+                    </div>
+                    <div class="form-group">
+                        <label for="square">Площадь</label>
+                        <input type="text" class="form-control @error('square') is-invalid @enderror" id="square" name="square" placeholder="Введите площадь комнаты">
+                    </div>
+                    <div class="form-group">
                         <label for="properties">Имущество</label>
-                        <select name="properties[]" id="properties" class="select2 select2-hidden-accessible" multiple="multiple" data-placeholder="Выбор имущества" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        <select name="properties[]" id="properties" onChange="f1()" class="select2 select2-hidden-accessible" multiple="multiple" data-placeholder="Выбор имущества" style="width: 100%;" tabindex="-1" aria-hidden="true">
                             @foreach($properties as $property)
                                 <option value="{{ $property->id }}">{{ $property->title }}({{ $property->mark }})</option>
                             @endforeach
                         </select>
-
                     </div>
                 </div>
                 <div class="card-footer">

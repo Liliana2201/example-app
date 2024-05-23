@@ -19,7 +19,6 @@ class CreateStaffTable extends Migration
             $table->string('name'); //имя
             $table->string('patronymic')->nullable(); //отчество
             $table->integer('id_post')->unsigned(); //id должности
-            $table->integer('id_dom')->unsigned(); //id общежития
             $table->integer('office'); //кабинет
             $table->string('phone'); //телефон
             $table->string('email'); //почта

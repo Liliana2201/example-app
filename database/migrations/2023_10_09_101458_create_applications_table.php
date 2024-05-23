@@ -15,9 +15,10 @@ class CreateApplicationsTable extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->integer('id_category')->unsigned(); //id категории
-            $table->integer('id_stud')->unsigned(); //id студента, оставившего заявку
-            $table->string('description'); //описание проблемы
+            $table->integer('id_category')->unsigned(); // id категории
+            $table->integer('id_stud')->unsigned(); // id студента, оставившего заявку
+            $table->string('description'); // описание проблемы
+            $table->Integer('is_check')->default(0); // 0-не рассмотрена, 1-рассмотрена
             $table->timestamps();
         });
     }

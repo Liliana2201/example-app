@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Condition_rooms;
 use App\Http\Controllers\Controller;
+use App\Rooms;
 use Illuminate\Http\Request;
 
 class ConditionController extends Controller
@@ -81,7 +82,13 @@ class ConditionController extends Controller
      */
     public function destroy($id)
     {
-        Condition_rooms::destroy($id);
-        return redirect()->route('condition_rooms.index')->with('success', 'Состояние удалено');
+        $condition_room = Condition_rooms::find($id);
+        if(count($condition_room->rooms)){
+            return redirect()->route('condition_rooms.index')->withErrors(['error' => 'Это состояние уже используется!']);
+        }
+        else{
+            $condition_room->delete();
+            return redirect()->route('condition_rooms.index')->with('success', 'Состояние удалено');
+        }
     }
 }

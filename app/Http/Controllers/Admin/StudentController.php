@@ -7,6 +7,7 @@ use App\Properties;
 use App\Rooms;
 use App\Students;
 use App\Users;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,6 +22,16 @@ class StudentController extends Controller
     {
         $students = Students::with('room', 'properties')->paginate(10);
         $properties = Properties::all();
+        foreach ($students as $student) {
+            $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($student->date_del);
+            //dd($dif);
+            if ($student->live == 1 and $dif >= 5) {
+                Storage::delete($student->photo);
+                Storage::delete($student->contract);
+                $student->delete();
+            }
+        }
+
         return view('admin.students.index', compact('students', 'properties'));
     }
 
@@ -50,6 +61,8 @@ class StudentController extends Controller
             'name' => 'required',
             'patronymic' => 'nullable|string',
             'group' => 'required',
+            'status' => 'required',
+            'form_edu' => 'required',
             'passport' => 'required',
             'issued_pas' => 'required',
             'date_pas' => 'required|date',
@@ -60,6 +73,8 @@ class StudentController extends Controller
             'email' => 'required|email',
             'date_flg' => 'required|date',
             'photo' => 'required|image',
+            'family' => 'nullable|string',
+            'notes' => 'nullable|string',
         ]);
         $data = $request->all();
         $data['photo'] = Students::uploadImage($request);
@@ -162,9 +177,9 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Students::find($id);
-        Storage::delete($student->photo);
-        Storage::delete($student->contract);
-        $student->delete();
-        return redirect()->route('students.index')->with('success', 'Студент удален!');
+        $student->live = 1;
+        $student->date_del = Carbon::now('Asia/Krasnoyarsk');
+        $student->update();
+        return redirect()->route('students.index')->with('success', 'Студент удалено!');
     }
 }

@@ -21,11 +21,10 @@
                 @method('PUT')
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}" @if($k == $property->id_dom) selected @endif>{{ $v }}</option>
-                            @endforeach
+                        <label for="category">Категория</label>
+                        <select class="form-control @error('category') is-invalid @enderror" id="category" name="category">
+                            <option value="Комнаты" @if($property->category == "Комнаты") selected @endif>Комнаты</option>
+                            <option value="Студенты" @if($property->category == "Студенты") selected @endif>Студенты</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -36,10 +35,14 @@
                         <label for="mark">Маркировка</label>
                         <input type="text" class="form-control @error('mark') is-invalid @enderror" id="mark" name="mark" value="{{ $property->mark }}">
                     </div>
-
+                    <div class="form-group">
+                        <label for="year">Год</label>
+                        <input type="number" min="1900" max="2099" step="1" class="form-control @error('year') is-invalid @enderror" id="year" name="year" value="{{ $property->year }}">
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('properties.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

@@ -6,11 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rooms extends Model
 {
-    protected $fillable = ['id_dom', 'number', 'id_cond'];
-    public function dormitory() //возвращает общежитие, в котором числится данная комната
-    {
-        return $this->belongsTo(Dormitories::class, 'id_dom');
-    }
+    protected $fillable = ['number', 'level', 'num_beds', 'square', 'id_cond'];
+
     public function condition_room() //возвращает состояние комнаты
     {
         return $this->belongsTo(Condition_rooms::class, 'id_cond');
@@ -18,5 +15,9 @@ class Rooms extends Model
     public function properties() //возвращает имущество в этой комнате
     {
         return $this->belongsToMany(Properties::class)->withTimestamps();
+    }
+    public function students() // возвращает студентов из этой комнаты
+    {
+        return $this->belongsToMany(Students::class)->withTimestamps();
     }
 }

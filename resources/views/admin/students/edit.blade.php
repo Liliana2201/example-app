@@ -41,6 +41,24 @@
                         <input type="text" class="form-control @error('patronymic') is-invalid @enderror" id="patronymic" name="patronymic" value="{{ $student->patronymic }}">
                     </div>
                     <div class="form-group">
+                        <label for="status">Статус</label>
+                        <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                            <option value="Обычный" @if($student->status == "Обычный") selected @endif>Обычный</option>
+                            <option value="Инвалид" @if($student->status == "Инвалид") selected @endif>Инвалид</option>
+                            <option value="Иностранный студент" @if($student->status == "Иностранный студент") selected @endif>Иностранный студент</option>
+                            <option value="Сирота" @if($student->status == "Сирота") selected @endif>Сирота</option>
+                            <option value="Малоимущая семья" @if($student->status == "Малоимущая семья") selected @endif>Малоимущая семья</option>
+                            <option value="Неполная семья" @if($student->status == "Неполная семья") selected @endif>Неполная семья</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_edu">Форма обучения</label>
+                        <select class="form-control @error('form_edu') is-invalid @enderror" id="form_edu" name="form_edu">
+                            <option value="Бюджет" @if($student->form_edu == "Бюджет") selected @endif>Бюджет</option>
+                            <option value="Платно" @if($student->form_edu == "Платно") selected @endif>Платно</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="group">Группа</label>
                         <input type="text" class="form-control @error('group') is-invalid @enderror" id="group" name="group" value="{{ $student->group }}">
                     </div>
@@ -119,9 +137,18 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="family">Контакты родителей</label>
+                        <input type="text" class="form-control @error('family') is-invalid @enderror" id="family" name="family" value="{{ $student->family }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Примечания</label>
+                        <input type="text" class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" value="{{ $student->notes }}">
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('students.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

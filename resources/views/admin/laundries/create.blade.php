@@ -33,7 +33,23 @@
                     </div>
                     <div class="form-group">
                         <label for="time_wash">Время стирки</label>
-                        <input type="time" class="form-control @error('time_wash') is-invalid @enderror" id="time_wash" name="time_wash">
+                        <select class="form-control @error('time_wash') is-invalid @enderror" id="time_wash" name="time_wash">
+                            <option value="06:20">06:20-07:30</option>
+                            <option value="07:30">07:30-08:40</option>
+                            <option value="08:40">08:40-09:50</option>
+                            <option value="09:50">09:50-11:00</option>
+                            <option value="11:00">11:00-12:10</option>
+                            <option value="12:10">12:10-13:20</option>
+                            <option value="13:20">13:20-14:30</option>
+                            <option value="14:30">14:30-15:40</option>
+                            <option value="15:40">15:40-16:50</option>
+                            <option value="16:50">16:50-18:00</option>
+                            <option value="18:00">18:00-19:10</option>
+                            <option value="19:10">19:10-20:20</option>
+                            <option value="20:20">20:20-21:30</option>
+                            <option value="21:30">21:30-22:40</option>
+                            <option value="22:40">22:40-23:50</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="id_stud">Студент</label>

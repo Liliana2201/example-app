@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Condition_rooms;
-use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\Properties;
 use App\Rooms;
+use App\Students;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -18,7 +18,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Rooms::with('dormitory', 'condition_room', 'properties')->paginate(10);
+        $rooms = Rooms::with('condition_room', 'properties')->paginate(10);
         $properties = Properties::all();
         return view('admin.rooms.index', compact('rooms', 'properties'));
 
@@ -32,9 +32,8 @@ class RoomController extends Controller
     public function create()
     {
         $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        $properties = Properties::all();
-        return view('admin.rooms.create', compact('condition_rooms', 'dormitories', 'properties'));
+        $properties = Properties::where('category', 'Комнаты')->where('status', 0)->get();
+        return view('admin.rooms.create', compact('condition_rooms', 'properties'));
     }
 
     /**
@@ -46,12 +45,19 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
+            'level' => 'required',
             'number' => 'required',
+            'num_beds' => 'required',
+            'square'=> 'required',
             'id_cond' => 'required|integer',
         ]);
         $rooms = Rooms::create($request->all());
         $rooms->properties()->sync($request->properties);
+        foreach ($request->properties as $id_prop){
+            $property = Properties::find($id_prop);
+            $property->status = 1;
+            $property->update();
+        }
         return redirect()->route('rooms.index')->with('success', 'Комната добавлена!');
     }
 
@@ -65,9 +71,8 @@ class RoomController extends Controller
     {
         $room = Rooms::with('properties')->find($id);
         $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
-        $dormitories = Dormitories::pluck('title', 'id')->all();
         $properties = Properties::all();
-        return view('admin.rooms.edit', compact('room', 'condition_rooms', 'dormitories', 'properties'));
+        return view('admin.rooms.edit', compact('room', 'condition_rooms', 'properties'));
     }
 
     /**
@@ -80,13 +85,20 @@ class RoomController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
+            'level' => 'required',
             'number' => 'required',
+            'num_beds' => 'required',
+            'square'=> 'required',
             'id_cond' => 'required|integer',
         ]);
         $room = Rooms::find($id);
         $room -> update($request->all());
         $room->properties()->sync($request->properties);
+        foreach ($request->properties as $id_prop){
+            $property = Properties::find($id_prop);
+            $property->status = 1;
+            $property->update();
+        }
         return redirect()->route('rooms.index')->with('success', 'Изменения сохранены!');
     }
 
@@ -99,8 +111,17 @@ class RoomController extends Controller
     public function destroy($id)
     {
         $room = Rooms::find($id);
-        $room->properties()->sync([]);
-        $room->delete();
-        return redirect()->route('rooms.index')->with('success', 'Комната удалена!');
+        if(count($room->students)){
+            return redirect()->route('rooms.index')->withErrors(['error' => 'Это комната уже используется!']);
+        }
+        else{
+            foreach ($room->properties as $property) {
+                $property->status = 0;
+                $property->update();
+            }
+            $room->properties()->sync([]);
+            $room->delete();
+            return redirect()->route('rooms.index')->with('success', 'Комната удалена!');
+        }
     }
 }

@@ -6,7 +6,9 @@ use App\Applications;
 use App\Http\Controllers\Controller;
 use App\Students;
 use App\Types_applications;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
 {
@@ -19,6 +21,13 @@ class ApplicationController extends Controller
     {
         $applications = Applications::with('category')->paginate(10);
         $students = Students::all();
+        foreach ($applications as $application) {
+            $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($application->created_at);
+            //dd($dif);
+            if ($application->is_check == 1 and $dif >= 1) {
+                $application->delete();
+            }
+        }
         return view('admin.applications.index', compact('applications', 'students'));
     }
 
@@ -97,6 +106,14 @@ class ApplicationController extends Controller
     {
         $application = Applications::find($id);
         $application->delete();
-        return redirect()->route('applications.index')->with('success', 'Категория удалена!');
+        return redirect()->route('applications.index')->with('success', 'Заявка удалена!');
+    }
+
+    public function updateStatus($id)
+    {
+        $application = Applications::find($id);
+        $application->is_check = 1;
+        $application->save();
+        return redirect()->route('applications.index')->with('success', 'Статус изменен!');
     }
 }

@@ -25,7 +25,6 @@ Route::get('/logout', 'UserController@logout')->name('logout');
 
 Route::group(['prefix'=>'admin','namespace'=> 'Admin', 'middleware' => 'admin'], function () {
     Route::get('/','MainController@index')->name('admin.index');
-    Route::resource('/dormitories', 'DormitoryController');
     Route::resource('/condition_rooms', 'ConditionController');
     Route::resource('/rooms', 'RoomController');
     Route::resource('/posts', 'PostController');
@@ -34,6 +33,7 @@ Route::group(['prefix'=>'admin','namespace'=> 'Admin', 'middleware' => 'admin'],
     Route::resource('/students', 'StudentController');
     Route::resource('/types_applications', 'TypeApplicationController');
     Route::resource('/applications', 'ApplicationController');
+    Route::get('/applications/status/{id}','ApplicationController@updateStatus')->name('status');
     Route::resource('/washing_machines', 'WashingMachineController');
     Route::resource('/laundries', 'LaundryController');
     Route::resource('/tags', 'TagController');

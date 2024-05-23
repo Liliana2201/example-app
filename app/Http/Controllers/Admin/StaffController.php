@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\Posts;
 use App\Staff;
@@ -19,7 +18,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staff = Staff::with('dormitory', 'post')->paginate(10);
+        $staff = Staff::with('post')->paginate(10);
         return view('admin.staff.index', compact('staff'));
     }
 
@@ -31,8 +30,7 @@ class StaffController extends Controller
     public function create()
     {
         $posts = Posts::pluck('title', 'id')->all();
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.staff.create', compact('posts', 'dormitories'));
+        return view('admin.staff.create', compact('posts'));
     }
 
     /**
@@ -48,7 +46,6 @@ class StaffController extends Controller
             'name' => 'required',
             'patronymic' => 'nullable|string',
             'id_post' => 'required|integer',
-            'id_dom' => 'required|integer',
             'office' => 'required',
             'phone' => 'required',
             'email' => 'required',
@@ -79,9 +76,20 @@ class StaffController extends Controller
                 $user->is_admin = 1;
                 $user->update();
             }
+            if (Posts::find($data['id_post'])->title == "Заведующий общежитием")
+            {
+                $user->is_head = 1;
+                $user->update();
+            }
+            if (Posts::find($data['id_post'])->title == "Заведующий хозяйством")
+            {
+                $user->is_house = 1;
+                $user->update();
+            }
+            return redirect()->route('staff.index')->with('success', 'Сотрудник добавлен!');
         }
 
-        return redirect()->route('staff.index')->with('success', 'Сотрудник добавлен!');
+        return redirect()->route('staff.index')->withErrors(['error' => 'Сотрудник с такой почтой уже существует!']);
     }
 
     /**
@@ -94,8 +102,7 @@ class StaffController extends Controller
     {
         $staff = Staff::find($id);
         $posts = Posts::pluck('title', 'id')->all();
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.staff.edit', compact('staff', 'posts', 'dormitories'));
+        return view('admin.staff.edit', compact('staff', 'posts'));
     }
 
     /**
@@ -112,7 +119,6 @@ class StaffController extends Controller
             'name' => 'required',
             'patronymic' => 'nullable|string',
             'id_post' => 'required|integer',
-            'id_dom' => 'required|integer',
             'office' => 'required',
             'phone' => 'required',
             'email' => 'required',

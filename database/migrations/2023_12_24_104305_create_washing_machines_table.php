@@ -15,7 +15,6 @@ class CreateWashingMachinesTable extends Migration
     {
         Schema::create('washing_machines', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->integer('id_dom')->unsigned(); //id общежития
             $table->date('date_check')->nullable(); //дата последней проверки состояния машинки
         });
     }

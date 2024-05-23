@@ -40,6 +40,24 @@
                         <input type="text" class="form-control @error('patronymic') is-invalid @enderror" id="patronymic" name="patronymic" placeholder="Введите отчество">
                     </div>
                     <div class="form-group">
+                        <label for="status">Статус</label>
+                        <select class="form-control @error('status') is-invalid @enderror" id="status" name="status">
+                            <option value="Обычный">Обычный</option>
+                            <option value="Инвалид">Инвалид</option>
+                            <option value="Иностранный студент">Иностранный студент</option>
+                            <option value="Сирота">Сирота</option>
+                            <option value="Малоимущая семья">Малоимущая семья</option>
+                            <option value="Неполная семья">Неполная семья</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="form_edu">Форма обучения</label>
+                        <select class="form-control @error('form_edu') is-invalid @enderror" id="form_edu" name="form_edu">
+                            <option value="Бюджет">Бюджет</option>
+                            <option value="Платно">Платно</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="group">Группа</label>
                         <input type="text" class="form-control @error('group') is-invalid @enderror" id="group" name="group" placeholder="Введите группу">
                     </div>
@@ -115,6 +133,14 @@
                                 <option value="{{ $property->id }}">{{ $property->title }}({{ $property->mark }})</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="family">Контакты родителей</label>
+                        <input type="text" class="form-control @error('family') is-invalid @enderror" id="family" name="family">
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Примечания</label>
+                        <input type="text" class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes">
                     </div>
                 </div>
                 <div class="card-footer">

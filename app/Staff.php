@@ -8,14 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class Staff extends Model
 {
-    protected $fillable = ['surname', 'name', 'patronymic', 'id_post', 'id_dom', 'office', 'phone', 'email', 'photo'];
+    protected $fillable = ['surname', 'name', 'patronymic', 'id_post', 'office', 'phone', 'email', 'photo'];
     public function post() //возвращает должность выбранного работника
     {
         return $this->belongsTo(Posts::class, 'id_post');
-    }
-    public function dormitory() //возвращает общежитие, в котором числится выбраный работник
-    {
-        return $this->belongsTo(Dormitories::class, 'id_dom');
     }
     public static function uploadImage(Request $request, $image = null)
     {

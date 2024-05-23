@@ -41,14 +41,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}" @if($k == $staff->id_dom) selected @endif>{{ $v }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="office">Кабинет</label>
                         <input type="text" class="form-control @error('office') is-invalid @enderror" id="office" name="office" value="{{ $staff->office }}">
                     </div>
@@ -77,6 +69,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('staff.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

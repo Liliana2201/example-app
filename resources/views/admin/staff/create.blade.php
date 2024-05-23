@@ -40,14 +40,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="id_dom">Общежитие</label>
-                        <select class="form-control @error('id_dom') is-invalid @enderror" id="id_dom" name="id_dom">
-                            @foreach($dormitories as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="office">Кабинет</label>
                         <input type="text" class="form-control @error('office') is-invalid @enderror" id="office" name="office" placeholder="Введите номер кабинета">
                     </div>

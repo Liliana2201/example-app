@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\Washing_machines;
 use Illuminate\Http\Request;
@@ -16,7 +15,7 @@ class WashingMachineController extends Controller
      */
     public function index()
     {
-        $washing_machines = Washing_machines::with('dormitory')->paginate(10);
+        $washing_machines = Washing_machines::paginate(10);
         return view('admin.washing_machines.index', compact('washing_machines'));
     }
 
@@ -27,8 +26,7 @@ class WashingMachineController extends Controller
      */
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.washing_machines.create', compact('dormitories'));
+        return view('admin.washing_machines.create');
     }
 
     /**
@@ -40,7 +38,6 @@ class WashingMachineController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
             'date_check' => 'required',
         ]);
         //dd($request->all());
@@ -57,8 +54,7 @@ class WashingMachineController extends Controller
     public function edit($id)
     {
         $washing_machine = Washing_machines::find($id);
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.washing_machines.edit', compact('washing_machine', 'dormitories'));
+        return view('admin.washing_machines.edit', compact('washing_machine'));
     }
 
     /**
@@ -71,7 +67,6 @@ class WashingMachineController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
             'date_check' => 'required',
         ]);
         $washing_machine = Washing_machines::find($id);
@@ -88,7 +83,12 @@ class WashingMachineController extends Controller
     public function destroy($id)
     {
         $washing_machines = Washing_machines::find($id);
-        $washing_machines->delete();
-        return redirect()->route('washing_machines.index')->with('success', 'Машинка удалена!');
+        if(count($washing_machines->laundries)){
+            return redirect()->route('washing_machines.index')->withErrors(['error' => 'Это машинка уже используется!']);
+        }
+        else{
+            $washing_machines->delete();
+            return redirect()->route('washing_machines.index')->with('success', 'Машинка удалена!');
+        }
     }
 }

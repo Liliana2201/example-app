@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Dormitories;
 use App\Http\Controllers\Controller;
 use App\Properties;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
+    public function search($value)
+    {
+        $properties = Properties::where('title', 'LIKE', '%' . $value . '%')->orWhere('mark', 'LIKE', '%' . $value . '%')->orWhere('year', 'LIKE', '%' . $value . '%')->get();
+        return view('admin.properties.index', compact('properties'));
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,14 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Properties::with('dormitory', 'students', 'rooms')->paginate(10);
+        $properties = Properties::paginate(10);
+        foreach ($properties as $property) {
+            $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($property->date_del);
+            //dd($dif);
+            if ($property->status == 2 and $dif >= 1) {
+                $property->delete();
+            }
+        }
         return view('admin.properties.index', compact('properties'));
     }
 
@@ -27,8 +39,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.create', compact('dormitories'));
+        return view('admin.properties.create');
     }
 
     /**
@@ -40,9 +51,10 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
+            'category' => 'required',
             'title' => 'required',
             'mark' => 'required',
+            'year' => 'required'
         ]);
        Properties::create($request->all());
        return redirect()->route('properties.index')->with('success', 'Имущество добавлено!');
@@ -57,8 +69,7 @@ class PropertyController extends Controller
     public function edit($id)
     {
         $property = Properties::find($id);
-        $dormitories = Dormitories::pluck('title', 'id')->all();
-        return view('admin.properties.edit', compact('dormitories', 'property'));
+        return view('admin.properties.edit', compact('property'));
     }
 
     /**
@@ -71,9 +82,10 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'id_dom' => 'required|integer',
+            'category' => 'required',
             'title' => 'required',
             'mark' => 'required',
+            'year' => 'required'
         ]);
         $property = Properties::find($id);
         $property -> update($request->all());
@@ -88,7 +100,15 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        Properties::destroy($id);
-        return redirect()->route('properties.index')->with('success', 'Имущество удалено!');
+        $property = Properties::find($id);
+        if($property->status == 0){
+            $property->status = 2;
+            $property->date_del = Carbon::now('Asia/Krasnoyarsk');
+            $property->update();
+            return redirect()->route('properties.index')->with('success', 'Имущество удалено!');
+        }
+        else{
+            return redirect()->route('properties.index')->withErrors(['error' => 'Это имущество уже используется!']);
+        }
     }
 }

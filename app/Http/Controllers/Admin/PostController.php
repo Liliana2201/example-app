@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Posts;
+use App\Staff;
+use App\Types_applications;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -81,7 +83,21 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        Posts::destroy($id);
-        return redirect()->route('posts.index')->with('success', 'Должность удалена!');
+        $post = Posts::find($id);
+        if(count($post->staff)){
+            return redirect()->route('posts.index')->withErrors(['error' => 'Это должность уже используется!']);
+        }
+        else{
+            $type_application = $post->type_application;
+            $applications = $type_application->aplications;
+            if (count($applications)){
+                return redirect()->route('posts.index')->withErrors(['error' => 'У этой должности есть заявки!']);
+            }
+            else{
+                $type_application->delete();
+                $post->delete();
+                return redirect()->route('posts.index')->with('success', 'Должность удалена!');
+            }
+        }
     }
 }

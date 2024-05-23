@@ -15,8 +15,10 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->increments('id'); //id
-            $table->integer('id_dom')->unsigned(); //id общежития
             $table->string('number'); // номер комнаты
+            $table->integer('level'); // этаж
+            $table->integer('num_beds'); // количество койко-мест
+            $table->float('square'); // площадь
             $table->integer('id_cond')->unsigned(); // id состояния
             $table->timestamps();
         });

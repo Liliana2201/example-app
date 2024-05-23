@@ -12,16 +12,14 @@ class UserController extends Controller
 {
     public function create()
     {
-        $dormitories = Dormitories::pluck('title', 'id')->all();
         $students = Students::all();
-        return view('admin.user.create', compact('dormitories', 'students'));
+        return view('admin.user.create', compact('students'));
     }
 
     public function store(Request $request)
     {
         //dd($request->all());
         $request->validate([
-            'id_dom' => 'required|integer',
             'user' => 'required|integer',
         ]);
         $data = $request->all();
@@ -53,6 +51,7 @@ class UserController extends Controller
             'password' => $request->password,
         ])) {
             session()->flash('success', 'Вы авторизовались!');
+            //return redirect()->route('admin.index');
             if (Auth::user()->is_admin)
             {
                 return redirect()->route('admin.index');

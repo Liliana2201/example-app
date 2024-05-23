@@ -19,13 +19,18 @@
 
     <div class="content-wrapper">
         <div class="container mt-2">
-            <div class="row">
+            <div id="sms" class="row">
                 <div class="col-12">
                     @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul class="list-unstyled">
                                 @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li>
+                                        {{ $error }}
+                                        <button style="float: right; margin: -0.25rem;" id="error" type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -33,6 +38,9 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
+                            <button style="float: right; margin: -0.25rem;" id="success" type="button" class="btn btn-tool" data-card-widget="remove" title="Success">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
                     @endif
                 </div>
@@ -71,6 +79,68 @@
     $(document).ready(function() {
         bsCustomFileInput.init();
     });
+
+    const button1 = document.getElementById('error');
+    if (button1) {
+        button1.addEventListener('click', function () {
+            closeBlock();
+        });
+    }
+    const button2 = document.getElementById('success');
+    if (button2) {
+        button2.addEventListener('click', function () {
+            closeBlock();
+        });
+    }
+
+    function closeBlock() {
+        const block = document.getElementById('sms');
+        if (!block) {
+            return;
+        }
+        return block.hidden= !block.hidden;
+    }
+
+    function Search() {
+        var input, filter, table, tr, th, td, i, j, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("table");
+        tr = table.getElementsByTagName("tr");
+        th = document.getElementsByTagName("th");
+
+        // Перебирайте все строки таблицы и скрывайте тех, кто не соответствует поисковому запросу
+        for (i = 0; i < tr.length; i++) {
+            for (j = 0; j < th.length; j++){
+                td = tr[i].getElementsByTagName("td")[j];
+                if (td && td.classList.contains("seo")) {
+                    txtValue = td.textContent;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break;
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+    // определиться, нужна ли эта функция вообще, ибо выбранные элементы и так серые, а то что я написала вообще не работает
+    var element = document.getElementById("properties");
+    var i;
+    function f1(){
+        if (element.childNodes.length){
+            for(i = 0; i < element.childNodes.length; i++) {
+                if(element.options[i].selected === true) {
+                    element.options[i].setAttribute('display', 'none');
+                }
+                else {
+                    element.options[i].removeAttribute('display')
+                }
+            }
+        }
+    }
+
 </script>
 </body>
 </html>
