@@ -21,13 +21,13 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
+                                <th class="ascdesc">Название</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($conditions as $condition)
-                                <tr class="odd">
+                                <tr>
                                     <td>{{ $condition->title }}</td>
                                     <td>
                                         <a href="{{ route('condition_rooms.edit', ['condition_room' => $condition->id]) }}" class="btn btn-info btn-sm float-left mr-1">

@@ -44,24 +44,48 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="table" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                        <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Маркировка</th>
-                                <th>Год</th>
-                                <th>Статус</th>
+                                <th class="ascdesc">Название</th>
+                                <th class="ascdesc">Маркировка</th>
+                                <th class="ascdesc">Год</th>
+                                <th>Статус
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                    <div class="div_filter" style="display: none; position: relative;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                            <form style="justify-content: space-around; display: grid;">
+                                                <div>
+                                                    <input id="all" class="filter checked" type="checkbox" checked>
+                                                    <label for="all">Все</label>
+                                                </div>
+                                                <div>
+                                                    <input id="stock" class="filter checked" type="checkbox" checked>
+                                                    <label for="stock">На складе</label>
+                                                </div>
+                                                <div>
+                                                    <input id="given" class="filter checked" type="checkbox" checked>
+                                                    <label for="given">Выдано</label>
+                                                </div>
+                                                <div>
+                                                    <input id="trash" class="filter checked" type="checkbox" checked>
+                                                    <label for="trash">Списано</label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($properties as $property)
                                 @if($property->status != 2)
-                                    <tr class="odd">
+                                    <tr>
                                         <td class="seo">{{ $property->title }}</td>
                                         <td class="seo">{{ $property->mark }}</td>
                                         <td class="seo">{{ $property->year }}</td>
-                                        <td class="seo">
+                                        <td class="seo td_filter">
                                             @if ($property->status == 0)
                                                 На складе
                                             @elseif($property->status == 1)
@@ -101,5 +125,8 @@
 
     </section>
     <!-- /.content -->
+    <script>
+
+    </script>
 @endsection
 

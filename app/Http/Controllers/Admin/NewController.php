@@ -18,7 +18,8 @@ class NewController extends Controller
     public function index()
     {
         $news = News::with( 'tags')->paginate(10);
-        return view('admin.news.index', compact('news'));
+        $tags = Tags::all();
+        return view('admin.news.index', compact('news', 'tags'));
     }
 
     /**

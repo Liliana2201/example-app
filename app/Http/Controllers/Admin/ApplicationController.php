@@ -21,6 +21,7 @@ class ApplicationController extends Controller
     {
         $applications = Applications::with('category')->paginate(10);
         $students = Students::all();
+        $types_applications = Types_applications::all();
         foreach ($applications as $application) {
             $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($application->created_at);
             //dd($dif);
@@ -28,7 +29,7 @@ class ApplicationController extends Controller
                 $application->delete();
             }
         }
-        return view('admin.applications.index', compact('applications', 'students'));
+        return view('admin.applications.index', compact('applications', 'students', 'types_applications'));
     }
 
     /**

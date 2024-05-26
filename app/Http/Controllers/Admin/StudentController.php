@@ -22,6 +22,7 @@ class StudentController extends Controller
     {
         $students = Students::with('room', 'properties')->paginate(10);
         $properties = Properties::all();
+        $rooms = Rooms::all();
         foreach ($students as $student) {
             $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($student->date_del);
             //dd($dif);
@@ -32,7 +33,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('admin.students.index', compact('students', 'properties'));
+        return view('admin.students.index', compact('students', 'properties', 'rooms'));
     }
 
     /**
@@ -43,7 +44,7 @@ class StudentController extends Controller
     public function create()
     {
         $rooms = Rooms::pluck('number', 'id')->all();
-        $properties = Properties::all();
+        $properties = Properties::where('category', 'Студенты')->where('status', 0)->get();
         return view('admin.students.create', compact('rooms', 'properties'));
     }
 
@@ -112,7 +113,7 @@ class StudentController extends Controller
     {
         $student = Students::with('properties')->find($id);
         $rooms = Rooms::pluck('number', 'id')->all();
-        $properties = Properties::all();
+        $properties = Properties::where('category', 'Студенты')->where('status', 0)->get();
         return view('admin.students.edit', compact('student', 'rooms', 'properties'));
     }
 

@@ -33,7 +33,7 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
+                                <th class="ascdesc">Название</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>

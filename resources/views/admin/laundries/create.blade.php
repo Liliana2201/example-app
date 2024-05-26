@@ -63,6 +63,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('laundries.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

@@ -35,8 +35,8 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Номер</th>
-                                <th>Последняя дата проверки</th>
+                                <th class="ascdesc">Номер</th>
+                                <th class="ascdesc">Последняя дата проверки</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>

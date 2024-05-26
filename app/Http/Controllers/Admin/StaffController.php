@@ -19,7 +19,8 @@ class StaffController extends Controller
     public function index()
     {
         $staff = Staff::with('post')->paginate(10);
-        return view('admin.staff.index', compact('staff'));
+        $posts = Posts::all();
+        return view('admin.staff.index', compact('staff', 'posts'));
     }
 
     /**

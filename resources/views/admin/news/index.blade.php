@@ -35,22 +35,40 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Время публикации</th>
-                                <th>Заголовок</th>
+                                <th class="ascdesc">Время публикации</th>
+                                <th class="ascdesc">Заголовок</th>
                                 <th>Краткое описание</th>
                                 <th>Мультимедиа</th>
-                                <th>Тэги</th>
+                                <th>Тэги
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                    <div class="div_filter" style="display: none; position: relative;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                            <form style="justify-content: space-around; display: grid;">
+                                                <div>
+                                                    <input id="all1" class="filter checked" type="checkbox" checked>
+                                                    <label for="all1">Все</label>
+                                                </div>
+                                                @foreach ($tags as $tag)
+                                                    <div>
+                                                        <input id="{{ $tag->id }}" class="filter checked" type="checkbox" checked>
+                                                        <label for="{{ $tag->id }}">{{ $tag->name_tag }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </form>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($news as $new)
-                                <tr class="odd">
+                                <tr>
                                     <td class="seo">{{ $new->created_at }}</td>
                                     <td class="seo">{{ $new->title_news }}</td>
                                     <td class="seo">{{ $new->description }}</td>
                                     <td><img src="{{ $new->getImage() }}" alt="" class="img-thumbnail mt-2" width="200"></td>
-                                    <td class="seo">{{ $new->tags->pluck('name_tag')->join(', ') }}</td>
+                                    <td class="seo td_filter">{{ $new->tags->pluck('name_tag')->join(', ') }}</td>
                                     <td>
                                         <a href="{{ route('news.edit', ['news' => $new->id]) }}" class="btn btn-info btn-sm float-left mr-1">
                                             <i class="fas fa-pencil-alt"></i>

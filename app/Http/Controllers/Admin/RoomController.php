@@ -20,7 +20,8 @@ class RoomController extends Controller
     {
         $rooms = Rooms::with('condition_room', 'properties')->paginate(10);
         $properties = Properties::all();
-        return view('admin.rooms.index', compact('rooms', 'properties'));
+        $condition_rooms = Condition_rooms::all();
+        return view('admin.rooms.index', compact('rooms', 'properties', 'condition_rooms'));
 
     }
 
@@ -71,7 +72,7 @@ class RoomController extends Controller
     {
         $room = Rooms::with('properties')->find($id);
         $condition_rooms = Condition_rooms::pluck('title', 'id')->all();
-        $properties = Properties::all();
+        $properties = Properties::where('category', 'Комнаты')->where('status', 0)->get();
         return view('admin.rooms.edit', compact('room', 'condition_rooms', 'properties'));
     }
 

@@ -46,24 +46,98 @@
                     <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                         <thead>
                         <tr>
-                            <th>Комната</th>
-                            <th>Фамилия</th>
+                            <th class="ascdesc">Комната
+                                <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <div class="div_filter" style="display: none; position: relative;">
+                                    <div style="position: absolute; background-color: #ffffff; min-width: 80px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                        <form style="justify-content: space-around; display: grid;">
+                                            <div>
+                                                <input id="all1" class="filter checked" type="checkbox" checked>
+                                                <label for="all1">Все</label>
+                                            </div>
+                                            @foreach ($rooms as $room)
+                                                <div>
+                                                    <input id="{{ $room->id }}" class="filter checked" type="checkbox" checked>
+                                                    <label for="{{ $room->id }}">{{ $room->number }}</label>
+                                                </div>
+                                            @endforeach
+                                        </form>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="ascdesc">Фамилия</th>
                             <th>Имя</th>
                             <th>Отчество</th>
-                            <th>Статус</th>
-                            <th>Форма обучения</th>
+                            <th>Статус
+                                <button onclick="myFunction(1)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <div class="div_filter" style="display: none; position: relative;">
+                                    <div style="position: absolute; background-color: #ffffff; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                        <form style="justify-content: space-around; display: grid;">
+                                            <div>
+                                                <input id="all2" class="filter checked" type="checkbox" checked>
+                                                <label for="all2">Все</label>
+                                            </div>
+                                            <div>
+                                                <input id="normal" class="filter checked" type="checkbox" checked>
+                                                <label for="normal">Обычный</label>
+                                            </div>
+                                            <div>
+                                                <input id="invalid" class="filter checked" type="checkbox" checked>
+                                                <label for="invalid">Инвалид</label>
+                                            </div>
+                                            <div>
+                                                <input id="foreign" class="filter checked" type="checkbox" checked>
+                                                <label for="foreign">Иностранный студент</label>
+                                            </div>
+                                            <div>
+                                                <input id="orphan" class="filter checked" type="checkbox" checked>
+                                                <label for="orphan">Сирота</label>
+                                            </div>
+                                            <div>
+                                                <input id="needy" class="filter checked" type="checkbox" checked>
+                                                <label for="needy">Малоимущая семья</label>
+                                            </div>
+                                            <div>
+                                                <input id="incomplete" class="filter checked" type="checkbox" checked>
+                                                <label for="incomplete">Неполная семья</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>Форма обучения
+                                <button onclick="myFunction(2)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <div class="div_filter" style="display: none; position: relative;">
+                                    <div style="position: absolute; background-color: #ffffff; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                        <form style="justify-content: space-around; display: grid;">
+                                            <div>
+                                                <input id="all3" class="filter checked" type="checkbox" checked>
+                                                <label for="all3">Все</label>
+                                            </div>
+                                            <div>
+                                                <input id="budget" class="filter checked" type="checkbox" checked>
+                                                <label for="budget">Бюджет</label>
+                                            </div>
+                                            <div>
+                                                <input id="payment" class="filter checked" type="checkbox" checked>
+                                                <label for="payment">Платно</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </th>
                             <th>Группа</th>
                             <th>Паспорт</th>
                             <th>Кем выдан</th>
                             <th>Дата выдачи</th>
-                            <th>Дата рождения</th>
+                            <th class="ascdesc">Дата рождения</th>
                             <th>Родной город</th>
                             <th>Договор</th>
-                            <th>Баланс</th>
+                            <th class="ascdesc">Баланс</th>
                             <th>Телефон</th>
                             <th>Почта</th>
-                            <th>Отработано часов</th>
-                            <th>Дата флг</th>
+                            <th class="ascdesc">Отработано часов</th>
+                            <th class="ascdesc">Дата флг</th>
                             <th>Фото</th>
                             <th>Имущество</th>
                             <th>Контакты родителей</th>
@@ -75,12 +149,12 @@
                         @foreach ($students as $student)
                             @if($student->live != 1)
                                 <tr class="odd">
-                                <td class="seo">{{ $student->room->number }}</td>
+                                <td class="seo td_filter">{{ $student->room->number }}</td>
                                 <td class="seo">{{ $student->surname }}</td>
                                 <td class="seo">{{ $student->name }}</td>
                                 <td class="seo">{{ $student->patronymic }}</td>
-                                <td class="seo">{{ $student->status }}</td>
-                                <td class="seo">{{ $student->form_edu }}</td>
+                                <td class="seo td_filter">{{ $student->status }}</td>
+                                <td class="seo td_filter">{{ $student->form_edu }}</td>
                                 <td class="seo">{{ $student->group }}</td>
                                 <td class="seo">{{ $student->passport }}</td>
                                 <td class="seo">{{ $student->issued_pas }}</td>

@@ -47,10 +47,28 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Фамилия</th>
+                                <th class="ascdesc">Фамилия</th>
                                 <th>Имя</th>
                                 <th>Отчество</th>
-                                <th>Должность</th>
+                                <th>Должность
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                    <div class="div_filter" style="display: none; position: relative;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 240px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                            <form style="justify-content: space-around; display: grid;">
+                                                <div>
+                                                    <input id="all1" class="filter checked" type="checkbox" checked>
+                                                    <label for="all1">Все</label>
+                                                </div>
+                                                @foreach ($posts as $post)
+                                                    <div>
+                                                        <input id="{{ $post->id }}" class="filter checked" type="checkbox" checked>
+                                                        <label for="{{ $post->id }}">{{ $post->title }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </form>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Кабинет</th>
                                 <th>Телефон</th>
                                 <th>Почта</th>
@@ -60,11 +78,11 @@
                             </thead>
                             <tbody>
                             @foreach ($staff as $staffer)
-                                <tr class="odd">
+                                <tr>
                                     <td class="seo">{{ $staffer->surname }}</td>
                                     <td class="seo">{{ $staffer->name }}</td>
                                     <td class="seo">{{ $staffer->patronymic }}</td>
-                                    <td class="seo">{{ $staffer->post->title }}</td>
+                                    <td class="seo td_filter">{{ $staffer->post->title }}</td>
                                     <td class="seo">{{ $staffer->office }}</td>
                                     <td class="seo">{{ $staffer->phone }}</td>
                                     <td class="seo">{{ $staffer->email }}</td>
