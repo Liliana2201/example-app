@@ -179,11 +179,6 @@
             btn.style.display="none";
             icon.style.color="#000000";
         }
-        /*for (let i=0; i < btn.length; i++){
-
-        }*/
-
-
     }
     const btn = document.getElementsByClassName("div_filter");
     const tr = document.getElementById("table").querySelectorAll("tr");
@@ -257,6 +252,106 @@
                 }
             });
         }
+    }
+    function openDiv() {
+        let btn = document.getElementsByClassName("div_column").item(0);
+        let icon = document.getElementById("column");
+        if (btn.style.display === "none"){
+            btn.style.display="inline-block";
+            icon.classList.remove("fa-caret-down");
+            icon.classList.add("fa-caret-up");
+        }
+        else{
+            btn.style.display="none";
+            icon.classList.remove("fa-caret-up");
+            icon.classList.add("fa-caret-down");
+        }
+    }
+    const check_col = document.getElementsByClassName("column");
+
+    for (let i=0; i < check_col.length; i++){
+        check_col.item(i).addEventListener('change', function() {
+            if (check_col.item(i).id.includes('all')){
+                if (check_col.item(i).classList.contains("unchecked")){ // если включили "все"
+                    check_col.item(i).classList.replace("unchecked", "checked");
+                    for (let j = i; j < check_col.length; j++){
+                        check_col.item(j).classList.replace("unchecked", "checked");
+                        check_col.item(j).checked = true;
+                    } // убираем у скрытых заголовков этот класс
+                    for (let n=0; n<th.length; n++){
+                        if (th[n].style.display === "none")
+                            th[n].style.display = "";
+                    } // убираем у скрытых столбцов этот класс
+                    for (let n=1; n<tr.length; n++){
+                        let td = tr[n].getElementsByTagName("td");
+                        for (let k=0; k<td.length; k++){
+                            if (td[k].style.display === "none")
+                                td[k].style.display = "";
+                        }
+                    }
+                }
+                else{ // если выключили "все"
+                    check_col[i].classList.replace("checked", "unchecked");
+                    for (let j = i; j < check_col.length; j++){
+                        check_col.item(j).classList.replace("checked", "unchecked");
+                        check_col.item(j).checked = false;
+                    } // добавляем всем столбцам в таблицы скрытность
+                    for (let n=0; n<th.length; n++) {
+                        th[n].style.display = "none";
+                    }
+                    for (let n=1; n<tr.length; n++){
+                        let td = tr[n].getElementsByTagName("td");
+                        for (let k=0; k<td.length; k++){
+                            td[k].style.display = "none";
+                        }
+                    }
+                }
+            }
+            else{
+                if (check_col.item(i).classList.contains("unchecked")){ // включили один из пунктов
+                    check_col.item(i).classList.replace("unchecked", "checked");
+                    let flag = true;
+                    for (let k=1; k<check_col.length; k++){
+                        if (check_col.item(k).classList.contains("unchecked") && k !== i)
+                            flag=false;
+                    }
+                    if(flag){ // если все остальные включены, включили "все"
+                        check_col.item(0).classList.replace("unchecked", "checked");
+                        check_col.item(0).checked = true;
+                    }
+                    let label = document.querySelector('label[for="' + check_col.item(i).id + '"]');
+                    for (let n=0; n<th.length; n++) {
+                        if (th[n].innerText.includes(label.innerText)){
+                            if (th[n].style.display === "none"){
+                                th[n].style.display = "";
+                                for (let k=1; k<tr.length; k++){
+                                    let td = tr[k].getElementsByTagName("td")[n];
+                                    if (td.style.display === "none")
+                                        td.style.display = "";
+                                }
+                            }
+                        }
+                    }
+                }
+                else{ // выключили один из пунктов
+                    check_col.item(i).classList.replace("checked", "unchecked");
+                    if (check_col.item(0).classList.contains("checked")){ // если включено "все" - выключаем
+                        check_col.item(0).classList.replace("checked", "unchecked");
+                        check_col.item(0).checked = false;
+                    }
+                    let label = document.querySelector('label[for="' + check_col.item(i).id + '"]');
+                    for (let n=0; n<th.length; n++) {
+                        if (th[n].innerText.includes(label.innerText)){
+                            th[n].style.display = "none";
+                            for (let k=1; k<tr.length; k++){
+                                let td = tr[k].getElementsByTagName("td")[n];
+                                td.style.display = "none";
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
 </script>

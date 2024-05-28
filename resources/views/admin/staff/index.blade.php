@@ -15,8 +15,8 @@
 
         <a href="{{ route('staff.create') }}" class="btn btn-primary mb-3">Добавить сотрудника</a>
         @if (count($staff))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
+            <div>
+                <div class="row mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
                             <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
@@ -24,8 +24,48 @@
                             <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
                             <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
                             <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <div class="btn-group">
-                                <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true"><span>Column visibility</span><span class="dt-down-arrow"></span></button>
+                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Column visibility <i id="column" class="fas fa-caret-down"></i></button>
+                            <div class="div_column" style="display: none; position: relative;">
+                                <div style="position: absolute; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
+                                    <form style="justify-content: space-around; display: grid;">
+                                        <div>
+                                            <input id="all2" class="column checked" type="checkbox" checked>
+                                            <label for="all2">Все</label>
+                                        </div>
+                                        <div>
+                                            <input id="surname" class="column checked" type="checkbox" checked>
+                                            <label for="surname">Фамилия</label>
+                                        </div>
+                                        <div>
+                                            <input id="name" class="column checked" type="checkbox" checked>
+                                            <label for="name">Имя</label>
+                                        </div>
+                                        <div>
+                                            <input id="patronymic" class="column checked" type="checkbox" checked>
+                                            <label for="patronymic">Отчество</label>
+                                        </div>
+                                        <div>
+                                            <input id="post" class="column checked" type="checkbox" checked>
+                                            <label for="post">Должность</label>
+                                        </div>
+                                        <div>
+                                            <input id="office" class="column checked" type="checkbox" checked>
+                                            <label for="office">Кабинет</label>
+                                        </div>
+                                        <div>
+                                            <input id="phone" class="column checked" type="checkbox" checked>
+                                            <label for="phone">Телефон</label>
+                                        </div>
+                                        <div>
+                                            <input id="email" class="column checked" type="checkbox" checked>
+                                            <label for="email">Почта</label>
+                                        </div>
+                                        <div>
+                                            <input id="photo" class="column checked" type="checkbox" checked>
+                                            <label for="photo">Фото</label>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

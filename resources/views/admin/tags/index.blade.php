@@ -15,15 +15,17 @@
 
         <a href="{{ route('tags.create') }}" class="btn btn-primary mb-3">Добавить тэг</a>
         @if (count($tags))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
-                    <div id="example1_filter" class="dataTables_filter mt-2 mb-2">
-                        <div class="row">
-                            <div class="col-2">
-                                <label for="search">Поиск</label>
-                            </div>
-                            <div class="col-10">
-                                <input type="text" class="form-control" onkeyup="Search()" id="search" name="search">
+            <div>
+                <div class="row mb-2 mt-2 ml-2 mr-2">
+                    <div class="col-sm-12 col-md-6">
+                        <div>
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="search">Поиск</label>
+                                </div>
+                                <div class="col-10">
+                                    <input type="text" class="form-control" onkeyup="Search()" id="search" name="search">
+                                </div>
                             </div>
                         </div>
                     </div>

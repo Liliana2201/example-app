@@ -15,17 +15,40 @@
 
         <a href="{{ route('properties.create') }}" class="btn btn-primary mb-3">Добавить имущество</a>
         @if (count($properties))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
+            <div>
+                <div class="row mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
-                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button>
-                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
-                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
-                            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <div class="btn-group">
-                                <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true"><span>Column visibility</span><span class="dt-down-arrow"></span></button>
+                            <button class="btn btn-secondary buttons-copy" type="button">Copy</button>
+                            <button class="btn btn-secondary buttons-excel" type="button">Excel</button>
+                            <button class="btn btn-secondary buttons-pdf" type="button">PDF</button>
+                            <button class="btn btn-secondary buttons-print" type="button">Print</button>
+                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Column visibility <i id="column" class="fas fa-caret-down"></i></button>
+                            <div class="div_column" style="display: none; position: relative;">
+                                <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
+                                    <form style="justify-content: space-around; display: grid;">
+                                        <div>
+                                            <input id="all2" class="column checked" type="checkbox" checked>
+                                            <label for="all2">Все</label>
+                                        </div>
+                                        <div>
+                                            <input id="name" class="column checked" type="checkbox" checked>
+                                            <label for="name">Название</label>
+                                        </div>
+                                        <div>
+                                            <input id="mark" class="column checked" type="checkbox" checked>
+                                            <label for="mark">Маркировка</label>
+                                        </div>
+                                        <div>
+                                            <input id="year" class="column checked" type="checkbox" checked>
+                                            <label for="year">Год</label>
+                                        </div>
+                                        <div>
+                                            <input id="status" class="column checked" type="checkbox" checked>
+                                            <label for="status">Статус</label>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -51,9 +74,9 @@
                                 <th class="ascdesc">Маркировка</th>
                                 <th class="ascdesc">Год</th>
                                 <th>Статус
-                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fa-filter"></i></button>
                                     <div class="div_filter" style="display: none; position: relative;">
-                                        <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                             <form style="justify-content: space-around; display: grid;">
                                                 <div>
                                                     <input id="all" class="filter checked" type="checkbox" checked>

@@ -15,7 +15,7 @@
 
         <a href="{{ route('types_applications.create') }}" class="btn btn-primary mb-3">Добавить категорию</a>
         @if (count($types_applications))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div>
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">

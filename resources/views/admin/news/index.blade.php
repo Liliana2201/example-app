@@ -15,8 +15,8 @@
 
         <a href="{{ route('news.create') }}" class="btn btn-primary mb-3">Добавить новость</a>
         @if (count($news))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
+            <div>
+                <div class="row mb-2 mt-2 ml-2 mr-2">
                     <div class="col-sm-12 col-md-6">
                         <div>
                             <div class="row">

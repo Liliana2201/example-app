@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Dormitories;
 use App\Students;
 use App\Users;
 use Illuminate\Http\Request;
