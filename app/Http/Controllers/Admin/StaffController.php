@@ -53,44 +53,52 @@ class StaffController extends Controller
             'photo' => 'required|image',
         ]);
         $data = $request->all();
-        $data['photo'] = Staff::uploadImage($request);
-        //dd($data);
-        $staff = Staff::create($data);
+
 
         $users = Users::all();
         $is_valid = True;
         foreach ($users as $user) {
-            if($staff->email == $user->email)
+            if($data['email'] == $user->email)
             {
                 $is_valid = False;
             }
         }
         if ($is_valid)
         {
+            $data['photo'] = Staff::uploadImage($request);
+            //dd($data);
+            $staff = Staff::create($data);
             $user = Users::create([
                 'name' => $staff->name,
                 'email' => $staff->email,
                 'password' => bcrypt($staff->phone),
+                'photo' => 'uploads/'.$staff->photo,
             ]);
             if (Posts::find($data['id_post'])->title == "Администратор")
             {
                 $user->is_admin = 1;
-                $user->update();
             }
             if (Posts::find($data['id_post'])->title == "Заведующий общежитием")
             {
                 $user->is_head = 1;
-                $user->update();
             }
             if (Posts::find($data['id_post'])->title == "Заведующий хозяйством")
             {
                 $user->is_house = 1;
-                $user->update();
             }
+            if (Posts::find($data['id_post'])->title == "Слесарь" || Posts::find($data['id_post'])->title == "Электрик" || Posts::find($data['id_post'])->title == "Сантехник")
+            {
+                $user->is_fitter = 1;
+            }
+            if (Posts::find($data['id_post'])->title == "Воспитатель")
+            {
+                $user->is_mentor = 1;
+            }
+            $user->update();
             return redirect()->route('staff.index')->with('success', 'Сотрудник добавлен!');
         }
 
-        return redirect()->route('staff.index')->withErrors(['error' => 'Сотрудник с такой почтой уже существует!']);
+        return redirect()->route('staff.create')->withErrors(['error' => 'Сотрудник с такой почтой уже существует!']);
     }
 
     /**
@@ -131,6 +139,16 @@ class StaffController extends Controller
         if ($file = Staff::uploadImage($request, $request->photo)){
             $data['photo'] = $file;
         }
+        $users = Users::all();
+        foreach ($users as $user) {
+            if($staff->name == $user->name && ($staff->email == $user->email || "uploads/".$staff->photo == $user->photo || bcrypt($staff->phone) == $user->password))
+            {
+                $user->email = $staff->email;
+                $user->photo = "uploads/".$staff->photo;
+                $user->password = bcrypt($staff->phone);
+                $user->save();
+            }
+        }
         //dd($data);
         $staff->update($data);
         return redirect()->route('staff.index', ['staff' => $staff->id])->with('success', 'Изменения сохранены!');
@@ -146,6 +164,13 @@ class StaffController extends Controller
     {
         $staff = Staff::find($id);
         Storage::delete($staff->photo);
+        $users = Users::all();
+        foreach ($users as $user) {
+            if($staff->email == $user->email)
+            {
+                $user->delete();
+            }
+        }
         $staff->delete();
         return redirect()->route('staff.index')->with('success', 'Сотрудник удален!');
     }

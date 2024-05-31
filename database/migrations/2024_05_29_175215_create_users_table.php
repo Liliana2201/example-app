@@ -19,11 +19,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('photo'); //ссылка на фото
             $table->rememberToken();
             $table->Integer('is_admin')->default(0);
             $table->Integer('is_smm')->default(0);
             $table->Integer('is_head')->default(0);
             $table->Integer('is_house')->default(0);
+            $table->Integer('is_mentor')->default(0);
+            $table->Integer('is_fitter')->default(0);
             $table->timestamps();
         });
     }

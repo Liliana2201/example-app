@@ -11,10 +11,10 @@
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
-<div class="wrapper">
+<div class="wrapper" style="min-width: fit-content;">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light fixed-top" >
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <!-- Notifications Dropdown Menu -->
@@ -28,9 +28,10 @@
     <!-- /.navbar -->
 
     @include('admin.layouts.sidebar')
+    >
 
-    <div class="content-wrapper">
-        <div class="container mt-2">
+    <div class="content-wrapper" style=" margin-top: 40px">
+        <div class="container mt-5">
             <div id="sms" class="row">
                 <div class="col-12">
                     @if ($errors->any())
@@ -353,6 +354,8 @@
             }
         });
     }
+
+
 
 </script>
 </body>

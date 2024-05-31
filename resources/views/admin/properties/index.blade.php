@@ -91,7 +91,7 @@
                                                     <label for="given">Выдано</label>
                                                 </div>
                                                 <div>
-                                                    <input id="trash" class="filter checked" type="checkbox" checked>
+                                                    <input id="trash" class="filter unchecked" type="checkbox">
                                                     <label for="trash">Списано</label>
                                                 </div>
                                             </form>
@@ -111,11 +111,30 @@
                                         <td class="seo td_filter">
                                             @if ($property->status == 0)
                                                 На складе
-                                            @elseif($property->status == 1)
-                                                Выдано
                                             @else
-                                                Списано
+                                                Выдано
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <form action="{{ route('properties.destroy', ['property' => $property->id]) }}" method="post" class="float-left">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr style="display: none">
+                                        <td class="seo">{{ $property->title }}</td>
+                                        <td class="seo">{{ $property->mark }}</td>
+                                        <td class="seo">{{ $property->year }}</td>
+                                        <td class="seo td_filter">
+                                            Списано
                                         </td>
                                         <td>
                                             <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-info btn-sm float-left mr-1">

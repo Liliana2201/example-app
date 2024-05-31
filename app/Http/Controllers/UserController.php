@@ -9,30 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function create()
-    {
-        $students = Students::all();
-        return view('admin.user.create', compact('students'));
-    }
-
-    public function store(Request $request)
-    {
-        //dd($request->all());
-        $request->validate([
-            'user' => 'required|integer',
-        ]);
-        $data = $request->all();
-        $student = Students::find($data['user']);
-        //dd($student);
-        Users::create([
-            'name' => $student->name,
-            'email' => $student->email,
-            'password' => bcrypt($student->passport),
-            'is_smm' => 1,
-        ]);
-        return redirect()->route('admin.index')->with('success', 'SMM добавлен!');
-    }
-
     public function loginForm()
     {
         return view('user.login');
@@ -51,7 +27,7 @@ class UserController extends Controller
         ])) {
             session()->flash('success', 'Вы авторизовались!');
             //return redirect()->route('admin.index');
-            if (Auth::user()->is_admin)
+            if (Auth::user()->is_admin || Auth::user()->is_smm || Auth::user()->is_head || Auth::user()->is_house || Auth::user()->is_mentor || Auth::user()->is_fitter)
             {
                 return redirect()->route('admin.index');
             }

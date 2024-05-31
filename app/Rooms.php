@@ -18,6 +18,6 @@ class Rooms extends Model
     }
     public function students() // возвращает студентов из этой комнаты
     {
-        return $this->belongsToMany(Students::class)->withTimestamps();
+        return $this->hasMany(Students::class, 'room_id');
     }
 }

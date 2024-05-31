@@ -25,6 +25,7 @@
                         <select class="form-control @error('category') is-invalid @enderror" id="category" name="category">
                             <option value="Комнаты" @if($property->category == "Комнаты") selected @endif>Комнаты</option>
                             <option value="Студенты" @if($property->category == "Студенты") selected @endif>Студенты</option>
+                            <option value="Постельное" @if($property->category == "Постельное") selected @endif>Постельное</option>
                         </select>
                     </div>
                     <div class="form-group">

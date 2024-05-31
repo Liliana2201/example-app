@@ -43,7 +43,15 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $rooms = Rooms::pluck('number', 'id')->all();
+        $rooms = Rooms::all();
+        for ($i = 0; $i < count($rooms); $i++) {
+            $room = $rooms[$i];
+            $c = count($room->students);
+            if ($c >= $room->num_beds){
+                unset($rooms[$i]);
+            }
+        }
+        //dd($rooms);
         $properties = Properties::where('category', 'Студенты')->where('status', 0)->get();
         return view('admin.students.create', compact('rooms', 'properties'));
     }
@@ -78,29 +86,37 @@ class StudentController extends Controller
             'notes' => 'nullable|string',
         ]);
         $data = $request->all();
-        $data['photo'] = Students::uploadImage($request);
-        $data['contract'] = Students::uploadContract($request);
-        //dd($data);
-        $student = Students::create($data);
-
         $users = Users::all();
         $is_valid = True;
         foreach ($users as $user) {
-            if($student->email == $user->email)
+            if($data['email'] == $user->email)
             {
                 $is_valid = False;
             }
         }
         if ($is_valid)
         {
+            $data['photo'] = Students::uploadImage($request);
+            $data['contract'] = Students::uploadContract($request);
+            //dd($data);
+            $student = Students::create($data);
             Users::create([
                 'name' => $student->name,
                 'email' => $student->email,
                 'password' => bcrypt($student->passport),
+                'photo' => "uploads/".$student->photo,
             ]);
+            $student->properties()->sync($request->properties);
+            if (count($student->properties)){
+                foreach ($student->properties as $property){
+                    $property->status = 1;
+                    $property->update();
+                }
+            }
+            return redirect()->route('students.index')->with('success', 'Студент добавлен!');
         }
-        $student->properties()->sync($request->properties);
-        return redirect()->route('students.index')->with('success', 'Студент добавлен!');
+        else
+            return redirect()->route('students.create')->withErrors(['error' => 'Студент с такой почтой уже существует!']);
     }
 
     /**
@@ -112,7 +128,14 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Students::with('properties')->find($id);
-        $rooms = Rooms::pluck('number', 'id')->all();
+        $rooms = Rooms::all();
+        for ($i = 0; $i < count($rooms); $i++) {
+            $room = $rooms[$i];
+            $c = count($room->students);
+            if ($c >= $room->num_beds){
+                unset($rooms[$i]);
+            }
+        }
         $properties = Properties::where('category', 'Студенты')->where('status', 0)->get();
         return view('admin.students.edit', compact('student', 'rooms', 'properties'));
     }
@@ -155,17 +178,23 @@ class StudentController extends Controller
         //dd($data);
         $student->update($data);
 
-        /*придумать как быть с изменением имени, почты и/или данных паспорта
-         * if ($is_valid)
-        {
-            Users::create([
-                'name' => $student->name,
-                'email' => $student->email,
-                'password' => bcrypt($student->passport),
-            ]);
-        }*/
-
+        $users = Users::all();
+        foreach ($users as $user) {
+            if($student->name == $user->name && ($student->email == $user->email || "uploads/".$student->photo == $user->photo || bcrypt($student->passport) == $user->password))
+            {
+                $user->email = $student->email;
+                $user->photo = "uploads/".$student->photo;
+                $user->password = bcrypt($student->passport);
+                $user->save();
+            }
+        }
         $student->properties()->sync($request->properties);
+        if (count($student->properties)){
+            foreach ($student->properties as $property){
+                $property->status = 1;
+                $property->update();
+            }
+        }
         return redirect()->route('students.index', ['student' => $student->id])->with('success', 'Изменения сохранены!');
     }
 
@@ -180,7 +209,14 @@ class StudentController extends Controller
         $student = Students::find($id);
         $student->live = 1;
         $student->date_del = Carbon::now('Asia/Krasnoyarsk');
+        $users = Users::all();
+        foreach ($users as $user) {
+            if($student->email == $user->email)
+            {
+                $user->delete();
+            }
+        }
         $student->update();
-        return redirect()->route('students.index')->with('success', 'Студент удалено!');
+        return redirect()->route('students.index')->with('success', 'Студент удален!');
     }
 }

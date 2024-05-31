@@ -60,7 +60,7 @@ class ApplicationController extends Controller
         $data = $request->all();
         //dd($data);
         $applications = Applications::create($data);
-        return redirect()->route('applications.index')->with('success', 'Заявка добавлен!');
+        return redirect()->route('applications.index')->with('success', 'Заявка добавлена!');
     }
 
     /**
