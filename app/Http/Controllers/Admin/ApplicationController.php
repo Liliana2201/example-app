@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Applications;
 use App\Http\Controllers\Controller;
+use App\Staff;
 use App\Students;
 use App\Types_applications;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicationController extends Controller
@@ -19,9 +21,25 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $applications = Applications::with('category')->paginate(10);
         $students = Students::all();
-        $types_applications = Types_applications::all();
+        $types_applications = Types_applications::with('post')->get();
+        $staff = Staff::where('email', Auth::user()->email)->first();
+        //dd($staff->post);
+        $auth_post = $staff->post;
+        if (Auth::user()->is_admin) {
+            $applications = Applications::with('category')->paginate(10);
+        }
+        else{
+            $applications = Applications::all();
+            for ($i = 0; $i < count($applications); $i++) {
+                $application = $applications[$i];
+                //dd($application->category->post);
+                $post = $application->category->post;
+                if ($auth_post != $post){
+                    unset($applications[$i]);
+                }
+            }
+        }
         foreach ($applications as $application) {
             $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($application->created_at);
             //dd($dif);
@@ -29,7 +47,7 @@ class ApplicationController extends Controller
                 $application->delete();
             }
         }
-        return view('admin.applications.index', compact('applications', 'students', 'types_applications'));
+        return view('admin.applications.index', compact('applications', 'students', 'types_applications', 'auth_post'));
     }
 
     /**

@@ -79,7 +79,7 @@
                                         <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                             <form style="justify-content: space-around; display: grid;">
                                                 <div>
-                                                    <input id="all" class="filter checked" type="checkbox" checked>
+                                                    <input id="all" class="filter unchecked" type="checkbox">
                                                     <label for="all">Все</label>
                                                 </div>
                                                 <div>

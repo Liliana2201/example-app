@@ -9,7 +9,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="display: flex; justify-content: space-between;">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex" style="display: flex; ">
             <div class="image">
                 <img src="{{asset(Auth::user()->photo)}}" class="img-circle elevation-2" alt="avatar" style="width: 3rem;">
             </div>
@@ -108,6 +108,7 @@
                         </p>
                     </a>
                 </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('applications.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-bell"></i>
@@ -116,7 +117,6 @@
                         </p>
                     </a>
                 </li>
-                @endif
                 @if (Auth::user()->is_admin || Auth::user()->is_house || Auth::user()->is_head)
                     <li class="nav-item">
                         <a href="{{ route('washing_machines.index') }}" class="nav-link">

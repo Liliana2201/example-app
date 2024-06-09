@@ -12,7 +12,9 @@
 
     <!-- Main content -->
     <section class="content">
-        <a href="{{ route('applications.create') }}" class="btn btn-primary mb-3">Добавить заявку</a>
+        @if (Auth::user()->is_admin)
+            <a href="{{ route('applications.create') }}" class="btn btn-primary mb-3">Добавить заявку</a>
+        @endif
         @if (count($applications))
             <div>
                 <div class="row mb-2 mt-2">
@@ -55,10 +57,17 @@
                                                     <label for="all1">Все</label>
                                                 </div>
                                                 @foreach ($types_applications as $types_application)
-                                                    <div>
-                                                        <input id="{{ $types_application->id }}" class="filter checked" type="checkbox" checked>
-                                                        <label for="{{ $types_application->id }}">{{ $types_application->name_category }}</label>
-                                                    </div>
+                                                    @if (Auth::user()->is_admin)
+                                                        <div>
+                                                            <input id="{{ $types_application->id }}" class="filter checked" type="checkbox" checked>
+                                                            <label for="{{ $types_application->id }}">{{ $types_application->name_category }}</label>
+                                                        </div>
+                                                    @elseif($types_application->post == $auth_post)
+                                                        <div>
+                                                            <input id="{{ $types_application->id }}" class="filter checked" type="checkbox" checked>
+                                                            <label for="{{ $types_application->id }}">{{ $types_application->name_category }}</label>
+                                                        </div>
+                                                    @endif
                                                 @endforeach
                                             </form>
                                         </div>
@@ -87,7 +96,9 @@
                                         </div>
                                     </div>
                                 </th>
-                                <th>Действия</th>
+                                @if (Auth::user()->is_admin)
+                                    <th>Действия</th>
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -110,31 +121,28 @@
                                         @endif
 
                                     </td>
-                                    <td>
-                                        <div>
-                                            <a href="{{ route('applications.edit', ['application' => $application->id]) }}" class="btn btn-info btn-sm float-left mr-1">
-                                                <i class="fas fa-pencil-alt"></i>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <form action="{{ route('applications.destroy', ['application' => $application->id]) }}" method="post" class="float-left">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
+                                    @if (Auth::user()->is_admin)
+                                        <td>
+                                            <div>
+                                                <a href="{{ route('applications.edit', ['application' => $application->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <form action="{{ route('applications.destroy', ['application' => $application->id]) }}" method="post" class="float-left">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        {{ $applications->links() }}
                     </div>
                 </div>
             </div>
