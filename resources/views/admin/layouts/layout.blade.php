@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
     <title>Админка</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -354,7 +355,77 @@
             }
         });
     }
+    function copytable(el) {
+        var urlField = document.getElementById(el)
+        var range = document.createRange()
+        range.selectNode(urlField)
+        window.getSelection().addRange(range)
+        document.execCommand('copy')
+    }
 
+    // jspdf плагин должен был всех спасти, но увы...
+    /*
+    $(function(){
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#editor': function (element, renderer) {
+                return true;
+            }
+        };
+
+        $('#buttons-pdf').click(function () {
+
+            var table = tableToJson($('#table').get(0))
+            var doc = new jsPDF('p','pt', 'a4', true);
+            doc.cellInitialize();
+            $.each(table, function (i, row){
+                console.debug(row);
+                $.each(row, function (j, cell){
+                    doc.cell(10, 50,120, 50, cell, i);  // 2nd parameter=top margin,1st=left margin 3rd=row cell width 4th=Row height
+                })
+            })
+
+
+            doc.save('sample-file.pdf');
+        });
+        function tableToJson(table) {
+            var data = [];
+
+            // first row needs to be headers
+            var headers = [];
+            for (var i=0; i<table.rows[0].cells.length; i++) {
+                headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+            }
+
+
+            // go through cells
+            for (var i=0; i<table.rows.length; i++) {
+
+                var tableRow = table.rows[i];
+                var rowData = {};
+
+                for (var j=0; j<tableRow.cells.length; j++) {
+
+                    rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+                }
+
+                data.push(rowData);
+            }
+
+            return data;
+        }
+    });*/
+
+    // оно должно работать, но не могу проверить:(
+    function printData()
+    {
+        var divToPrint=document.getElementById("table");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    }
 
 
 </script>
