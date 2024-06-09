@@ -14,6 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/abiturient', 'HomeController@abiturient')->name('abiturient');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/news', 'HomeController@news')->name('news');
+    Route::get('/news{slug}', 'HomeController@news')->name('news.single');
+    Route::get('/request', 'HomeController@request')->name('request');
+    Route::get('/requestt', 'HomeController@requestt')->name('requestt');
+    Route::get('/laundry', 'HomeController@laundry')->name('laundry');
+    Route::get('/complaint', 'HomeController@complaint')->name('complaint');
+    Route::get('/cabinet', 'HomeController@cabinet')->name('cabinet');
+    Route::post('/add-application', 'HomeController@addApplication')->name('add_application');
+});
+
+Route::group( ['middleware' => 'auth'], function () {
+    
+});
 
 Route::get('/register', 'UserController@create')->name('register.create');
 Route::post('/register', 'UserController@store')->name('register.store');

@@ -52,18 +52,17 @@
                                     </span>
                                 </button>
                             </div>
+
                         </div>
-                        @if (Route::has('login'))
-                        @auth
                         <div class="top-line-right-content">
-                            <div class="quick-links-wrap">
-                                <div class="quick-links">
-                                    <a href="{{ route('cabinet') }}" style="font-size: 150%;">Личный кабинет</a>
+                            <div class="res-links-wrap">
+                                <div class="res-links">
+                                    <div id="js-res-links" class="droplist-main">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        @endauth
-                        @endif
                     </div>
                 </div>
                 <div class="head-content">
@@ -124,10 +123,30 @@
             </header>
         </header>
         <main>
-            @yield('slider')
             <section class="main-sect white-sect news-sect">
                 <div class="container">
-                    @yield('content')
+                    <div class="row">
+                        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                            <div class="page-wrapper">
+                                <div class="blog-title-area">
+                                    @yield('breadcrumb')
+                                    <!-- <ol class="breadcrumb hidden-xs-down">
+                                        <li class="breadcrumb-item"><a href="#">Главная</a></li>
+                                        <li class="breadcrumb-item active">Поступающему</li>
+                                    </ol> -->
+                                </div>
+
+                                <div class="blog-content">
+                                    <div>
+                                        @yield('content')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @yield('right')
+
+                    </div>
                 </div>
             </section>
         </main>
@@ -179,7 +198,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-24">
-                                <div class="copy-sibgu">© Сибирский государственный университет науки и технологий имени академика М.Ф. Решетнева, Общежитие №3,
+                                <div class="copy-sibgu">© Сибирский государственный университет науки и технологий имени академика М.Ф. Решетнева,
                                     <script>
                                         document.write(new Date().getFullYear())
                                     </script>
@@ -192,7 +211,7 @@
             <script src="/assets/students/js/jquery-libs.js"></script>
             <script src="/assets/students/js/common.js"></script>
             <script type="text/javascript" src="/assets/students/js/openapi.js"></script>
-
+            <script src="assets/students/js/jquery.min.js"></script>
             <script src="assets/students/js/owl.carousel.min.js"></script>
             <script>
                 $('.owl-carousel').owlCarousel({
@@ -202,10 +221,6 @@
                     nav: true
                 })
             </script>
-            @yield('scripts')
-            <!-- Template  JS -->
-            <script src="./assets/js/main.js?v=5.6"></script>
-            <script src="./assets/js/shop.js?v=5.6"></script>
         </footer>
     </div>
     <div id="mm-blocker" class="mm-slideout"></div>

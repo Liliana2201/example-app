@@ -5204,13 +5204,13 @@ a {
     color: #0863d8;
     border-width: 1px;
     border-bottom-style: solid;
-    border-color: #0863d8;
+    border-color: #4b79bb;
 }
 
 a:hover, a:active, a:focus {
     text-decoration: none;
-    color: #e73124;
-    border-bottom: 1px solid #e73124;
+    color: #89be5c;
+    border-bottom: 1px solid #89be5c;
 }
 
 h1, .h1 {
@@ -7128,8 +7128,8 @@ blockquote {
     font-size: 1.25rem;
     padding: 0.75rem 2rem;
     line-height: 1;
-    border: 2px solid #fff;
-    background-color: transparent;
+    border: 2px solid #0202029c;
+    background-color: #0202029c;
     color: #fff;
     -webkit-border-radius: 2rem;
     border-radius: 2rem;
@@ -7693,7 +7693,7 @@ blockquote {
 #wrapwrap .main-footer a {
     font-size: 0.875rem;
     color: #fff;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #dbdbdb00;
     -webkit-transition: color 0.25s ease-out, border-bottom-color 0.25s ease-out;
     -o-transition: color 0.25s ease-out, border-bottom-color 0.25s ease-out;
     transition: color 0.25s ease-out, border-bottom-color 0.25s ease-out;
