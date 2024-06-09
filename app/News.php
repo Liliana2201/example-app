@@ -2,12 +2,12 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class News extends Model
-{
+class News extends Model{
     protected $fillable = ['title_news', 'content', 'description', 'url_photo'];
 
     public function tags() //возвращает теги, к которым относится эта новость
@@ -32,5 +32,11 @@ class News extends Model
             return asset("no-image.png");
         }
         return asset("uploads/{$this->url_photo}");
+    }
+
+    public function getPostDate()
+    {
+        Carbon::setLocale('ru');
+        return Carbon::createFromFormat("Y-m-d H:i:s", $this->created_at)->translatedFormat('d F Y');
     }
 }

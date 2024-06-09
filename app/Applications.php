@@ -15,4 +15,9 @@ class Applications extends Model
     {
         return $this->belongsTo(Students::class, 'id_stud');
     }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Types_applications', 'id_category');
+    }
 }
