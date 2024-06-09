@@ -15,13 +15,13 @@
 
         <a href="{{ route('posts.create') }}" class="btn btn-primary mb-3">Добавить должность</a>
         @if (count($posts))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div>
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
+                                <th class="ascdesc">Название</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>

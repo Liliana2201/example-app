@@ -23,8 +23,8 @@
                     <div class="form-group">
                         <label for="room_id">Комната</label>
                         <select class="form-control @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
-                            @foreach($rooms as $k => $v)
-                                <option value="{{ $k }}" @if($k == $student->room_id) selected @endif>{{ $v }}</option>
+                            @foreach($rooms as $room)
+                                <option value="{{ $room->id }}" @if($room->id == $student->room_id) selected @endif>{{ $room->number }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -130,10 +130,14 @@
                         <label for="properties">Имущество</label>
                         <select name="properties[]" id="properties" class="select2 @error('properties') is-invalid @enderror" multiple="multiple"
                                 data-placeholder="Выбор имущества" style="width: 100%;">
-                            @foreach($student->properties as $property_student)
-                                @foreach($properties as $property)
-                                    <option value="{{ $property->id }}" @if($property->id == $property_student->id) selected @endif>{{ $property->title }}({{ $property->mark }})</option>
-                                @endforeach
+                            @foreach($properties as $property)
+                                @if (count($student->properties))
+                                    @foreach($student->properties as $property_student)
+                                        <option value="{{ $property->id }}" @if($property->id == $property_student->id) selected @endif>{{ $property->title }}({{ $property->mark }})</option>
+                                    @endforeach
+                                @else
+                                    <option value="{{ $property->id }}">{{ $property->title }}({{ $property->mark }})</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>

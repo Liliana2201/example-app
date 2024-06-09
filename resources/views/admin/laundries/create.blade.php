@@ -34,16 +34,16 @@
                 <div class="form-group">
                     <label for="time_wash">Время стирки</label>
                     <select class="form-control @error('time_wash') is-invalid @enderror" id="time_wash" name="time_wash">
-                        <option value="06:20">06:00 - 07:10</option>
-                        <option value="07:30">07:10 - 08:20</option>
-                        <option value="08:40">08:20 - 09:30</option>
-                        <option value="09:50">09:30 - 10:40</option>
-                        <option value="11:00">10:40 - 11:50</option>
-                        <option value="12:10">12:00 - 13:10</option>
-                        <option value="13:20">13:10 - 14:20</option>
-                        <option value="14:30">14:20 - 15:30</option>
-                        <option value="15:40">15:30 - 16:40</option>
-                        <option value="16:50">16:40 - 17:50</option>
+                        <option value="06:00">06:00 - 07:10</option>
+                        <option value="07:10">07:10 - 08:20</option>
+                        <option value="08:20">08:20 - 09:30</option>
+                        <option value="09:30">09:30 - 10:40</option>
+                        <option value="10:40">10:40 - 11:50</option>
+                        <option value="12:00">12:00 - 13:10</option>
+                        <option value="13:10">13:10 - 14:20</option>
+                        <option value="14:20">14:20 - 15:30</option>
+                        <option value="15:30">15:30 - 16:40</option>
+                        <option value="16:40">16:40 - 17:50</option>
                         <option value="18:00">18:00 - 19:10</option>
                         <option value="19:10">19:10 - 20:20</option>
                         <option value="20:20">20:20 - 21:30</option>
@@ -58,6 +58,9 @@
                         <option value="{{ $student->id }}">{{ $student->surname }} {{ $student->name }} {{ $student->patronymic }}</option>
                         @endforeach
                     </select>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('laundries.index') }}">Отменить</a></button>
                 </div>
 
             </div>

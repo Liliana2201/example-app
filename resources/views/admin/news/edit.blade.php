@@ -58,6 +58,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('news.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

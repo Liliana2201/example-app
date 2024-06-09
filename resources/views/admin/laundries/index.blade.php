@@ -15,8 +15,8 @@
 
         <a href="{{ route('laundries.create') }}" class="btn btn-primary mb-3">Добавить стирку</a>
         @if (count($laundries))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
+            <div>
+                <div class="row  mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
                             <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
@@ -24,9 +24,6 @@
                             <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
                             <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
                             <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <div class="btn-group">
-                                <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true"><span>Column visibility</span><span class="dt-down-arrow"></span></button>
-                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
@@ -47,24 +44,37 @@
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Дата</th>
-                                <th>Время</th>
-                                <th>Машинка</th>
+                                <th class="ascdesc">Дата</th>
+                                <th class="ascdesc">Время</th>
+                                <th>Машинка
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                    <div class="div_filter" style="display: none; position: relative;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                            <form style="justify-content: space-around; display: grid;">
+                                                <div>
+                                                    <input id="all1" class="filter checked" type="checkbox" checked>
+                                                    <label for="all1">Все</label>
+                                                </div>
+                                                @foreach ($washing_machines as $washing_machine)
+                                                    <div>
+                                                        <input id="{{ $washing_machine->id }}" class="filter checked" type="checkbox" checked>
+                                                        <label for="{{ $washing_machine->id }}">{{ $washing_machine->id }}</label>
+                                                    </div>
+                                                @endforeach
+                                            </form>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Студент</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($laundries as $laundry)
-                                <tr class="odd">
+                                <tr>
                                     <td class="seo">{{ $laundry->date_wash }}</td>
                                     <td class="seo">{{ $laundry->time_wash }}</td>
-                                    <td class="seo">@foreach ($washing_machines as $washing_machine)
-                                            @if ($laundry->id_mash == $washing_machine->id)
-                                                {{ $washing_machine->id }}
-                                            @endif
-                                        @endforeach
-                                    </td>
+                                    <td class="seo td_filter">{{ $laundry->id_mash }}</td>
                                     <td class="seo">@foreach ($students as $student)
                                             @if ($laundry->id_stud == $student->id)
                                                 {{ $student->surname }} {{ $student->name }} {{ $student->patronymic }}

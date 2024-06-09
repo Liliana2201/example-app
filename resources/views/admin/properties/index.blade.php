@@ -15,17 +15,40 @@
 
         <a href="{{ route('properties.create') }}" class="btn btn-primary mb-3">Добавить имущество</a>
         @if (count($properties))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                <div class="row">
+            <div>
+                <div class="row mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
-                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button>
-                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
-                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
-                            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <div class="btn-group">
-                                <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true"><span>Column visibility</span><span class="dt-down-arrow"></span></button>
+                            <button class="btn btn-secondary buttons-copy" type="button">Copy</button>
+                            <button class="btn btn-secondary buttons-excel" type="button">Excel</button>
+                            <button class="btn btn-secondary buttons-pdf" type="button">PDF</button>
+                            <button class="btn btn-secondary buttons-print" type="button">Print</button>
+                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Column visibility <i id="column" class="fas fa-caret-down"></i></button>
+                            <div class="div_column" style="display: none; position: relative;">
+                                <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
+                                    <form style="justify-content: space-around; display: grid;">
+                                        <div>
+                                            <input id="all2" class="column checked" type="checkbox" checked>
+                                            <label for="all2">Все</label>
+                                        </div>
+                                        <div>
+                                            <input id="name" class="column checked" type="checkbox" checked>
+                                            <label for="name">Название</label>
+                                        </div>
+                                        <div>
+                                            <input id="mark" class="column checked" type="checkbox" checked>
+                                            <label for="mark">Маркировка</label>
+                                        </div>
+                                        <div>
+                                            <input id="year" class="column checked" type="checkbox" checked>
+                                            <label for="year">Год</label>
+                                        </div>
+                                        <div>
+                                            <input id="status" class="column checked" type="checkbox" checked>
+                                            <label for="status">Статус</label>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,31 +67,74 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="table" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+                        <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Маркировка</th>
-                                <th>Год</th>
-                                <th>Статус</th>
+                                <th class="ascdesc">Название</th>
+                                <th class="ascdesc">Маркировка</th>
+                                <th class="ascdesc">Год</th>
+                                <th>Статус
+                                    <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fa-filter"></i></button>
+                                    <div class="div_filter" style="display: none; position: relative;">
+                                        <div style="position: absolute; background-color: #ffffff; min-width: 120px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
+                                            <form style="justify-content: space-around; display: grid;">
+                                                <div>
+                                                    <input id="all" class="filter unchecked" type="checkbox">
+                                                    <label for="all">Все</label>
+                                                </div>
+                                                <div>
+                                                    <input id="stock" class="filter checked" type="checkbox" checked>
+                                                    <label for="stock">На складе</label>
+                                                </div>
+                                                <div>
+                                                    <input id="given" class="filter checked" type="checkbox" checked>
+                                                    <label for="given">Выдано</label>
+                                                </div>
+                                                <div>
+                                                    <input id="trash" class="filter unchecked" type="checkbox">
+                                                    <label for="trash">Списано</label>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($properties as $property)
                                 @if($property->status != 2)
-                                    <tr class="odd">
+                                    <tr>
                                         <td class="seo">{{ $property->title }}</td>
                                         <td class="seo">{{ $property->mark }}</td>
                                         <td class="seo">{{ $property->year }}</td>
-                                        <td class="seo">
+                                        <td class="seo td_filter">
                                             @if ($property->status == 0)
                                                 На складе
-                                            @elseif($property->status == 1)
-                                                Выдано
                                             @else
-                                                Списано
+                                                Выдано
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-info btn-sm float-left mr-1">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            <form action="{{ route('properties.destroy', ['property' => $property->id]) }}" method="post" class="float-left">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Подтвердите удаление')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @else
+                                    <tr style="display: none">
+                                        <td class="seo">{{ $property->title }}</td>
+                                        <td class="seo">{{ $property->mark }}</td>
+                                        <td class="seo">{{ $property->year }}</td>
+                                        <td class="seo td_filter">
+                                            Списано
                                         </td>
                                         <td>
                                             <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-info btn-sm float-left mr-1">
@@ -101,5 +167,8 @@
 
     </section>
     <!-- /.content -->
+    <script>
+
+    </script>
 @endsection
 

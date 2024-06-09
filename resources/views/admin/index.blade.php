@@ -3,19 +3,7 @@
 @section('content')
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Главная</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                            <li class="breadcrumb-item active">Blank Page</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
+            <h1>Главная</h1>
         </section>
 
         <!-- Main content -->
@@ -36,7 +24,24 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    Start creating your amazing application!
+                    @if (Auth::user()->is_admin)
+                        Привет, Админ!
+                    @endif
+                    @if (Auth::user()->is_smm)
+                        Привет, SMM!
+                    @endif
+                    @if (Auth::user()->is_head)
+                        Привет, Заведующий общежитием!
+                    @endif
+                    @if (Auth::user()->is_house)
+                        Привет, Заведующий хозяйством!
+                    @endif
+                    @if (Auth::user()->is_mentor)
+                        Привет, Специалист воспитательной службы!
+                    @endif
+                    @if (Auth::user()->is_fitter)
+                        Привет, Специалист аварийной службы!
+                    @endif
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">

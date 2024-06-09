@@ -22,8 +22,8 @@
                     <div class="form-group">
                         <label for="room_id">Комната</label>
                         <select class="form-control @error('room_id') is-invalid @enderror" id="room_id" name="room_id">
-                            @foreach($rooms as $k => $v)
-                                <option value="{{ $k }}">{{ $v }}</option>
+                            @foreach($rooms as $room)
+                                <option value="{{ $room->id }}">{{ $room->number }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label for="passport">Паспорт</label>
-                        <input type="text" class="form-control @error('passport') is-invalid @enderror" id="passport" name="passport" placeholder="Введите серрию и номер паспорта">
+                        <input type="text" class="form-control @error('passport') is-invalid @enderror" id="passport" name="passport" placeholder="Введите серию и номер паспорта">
                     </div>
                     <div class="form-group">
                         <label for="issued_pas">Кем выдан</label>
@@ -93,7 +93,7 @@
                         <div><a id="file" href=""></a></div>
                     <div class="form-group">
                         <label for="balance">Баланс</label>
-                        <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance" name="balance" placeholder="0">
+                        <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance" name="balance" value="0">
                     </div>
                     <div class="form-group">
                         <label for="phone">Телефон</label>
@@ -105,7 +105,7 @@
                     </div>
                     <div class="form-group">
                         <label for="work_out">Отработано часов</label>
-                        <input type="number" class="form-control @error('work_out') is-invalid @enderror" id="work_out" name="work_out" placeholder="0">
+                        <input type="number" class="form-control @error('work_out') is-invalid @enderror" id="work_out" name="work_out" value="0">
                     </div>
                     <div class="form-group">
                         <label for="date_flg">Дата последней флюрографии</label>
@@ -145,6 +145,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-outline-secondary"><a href="{{ route('students.index') }}">Отменить</a></button>
                 </div>
             </form>
         </div>

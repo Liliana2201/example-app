@@ -15,19 +15,19 @@
 
         <a href="{{ route('condition_rooms.create') }}" class="btn btn-primary mb-3">Добавить состояние</a>
         @if (count($conditions))
-            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+            <div>
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                             <thead>
                             <tr>
-                                <th>Название</th>
+                                <th class="ascdesc">Название</th>
                                 <th>Действия</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($conditions as $condition)
-                                <tr class="odd">
+                                <tr>
                                     <td>{{ $condition->title }}</td>
                                     <td>
                                         <a href="{{ route('condition_rooms.edit', ['condition_room' => $condition->id]) }}" class="btn btn-info btn-sm float-left mr-1">
