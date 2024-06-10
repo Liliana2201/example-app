@@ -17,14 +17,13 @@
         @if (count($students))
             <div>
                 <div class="row mb-2 mt-2">
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-7">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
-                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button>
-                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
-                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
-                            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Column visibility <i id="column" class="fas fa-caret-down"></i></button>
+                            <button class="btn btn-secondary buttons-copy" onClick="copytable('table')" type="button">Копировать</button>
+                            <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'properties')" type="button">Excel</button>
+                            <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
+                            <button class="btn btn-secondary buttons-print" onClick="printData()" type="button">Печать</button>
+                            <button onclick="openDiv(0)" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i class="fas fa-caret-down i_column"></i></button>
                             <div class="div_column" style="display: none; position: relative;">
                                 <div style="position: absolute; background-color: #ffffff; min-width: 400px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                     <form style="justify-content: space-around; display: list-item; padding: 10px">
@@ -33,6 +32,10 @@
                                                 <div>
                                                     <input id="all5" class="column unchecked" type="checkbox">
                                                     <label for="all5">Все</label>
+                                                </div>
+                                                <div>
+                                                    <input id="level" class="column checked" type="checkbox" checked>
+                                                    <label for="level">Этаж</label>
                                                 </div>
                                                 <div>
                                                     <input id="room" class="column checked" type="checkbox" checked>
@@ -74,12 +77,12 @@
                                                     <input id="date_pas" class="column unchecked" type="checkbox">
                                                     <label for="date_pas">Дата выдачи</label>
                                                 </div>
+                                            </div>
+                                            <div class="col-6">
                                                 <div>
                                                     <input id="date_births" class="column checked" type="checkbox" checked>
                                                     <label for="date_births">Дата рождения</label>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
                                                 <div>
                                                     <input id="hometown" class="column unchecked" type="checkbox">
                                                     <label for="hometown">Родной город</label>
@@ -129,9 +132,28 @@
                                     </form>
                                 </div>
                             </div>
+                            <button onclick="openDiv(1)" class="btn btn-secondary buttons-livevis" type="button">Проживают <i class="fas fa-caret-down i_column"></i></button>
+                            <div class="div_column" style="display: none; position: relative;">
+                                <div style="position: absolute; background-color: #ffffff; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
+                                    <form style="justify-content: space-around; display: list-item; padding: 10px">
+                                        <div>
+                                            <input id="all6" class="live_ch unchecked" type="checkbox">
+                                            <label for="all6">Все</label>
+                                        </div>
+                                        <div>
+                                            <input id="live" class="live_ch checked" type="checkbox" checked>
+                                            <label for="live">Проживают</label>
+                                        </div>
+                                        <div>
+                                            <input id="unlive" class="live_ch unchecked" type="checkbox">
+                                            <label for="unlive">Не проживают</label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-5">
                         <div>
                             <div class="row">
                                 <div class="col-2">
@@ -148,8 +170,37 @@
                     <table id="table" class="table table-bordered table-striped dataTable dtr-inline">
                         <thead>
                         <tr>
-                            <th class="ascdesc">Комната
+                            <th class="ascdesc">Этаж
                                 <button onclick="myFunction(0)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <div class="div_filter" style="display: none; position: relative;">
+                                    <div style="position: absolute; background-color: #ffffff; min-width: 80px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
+                                        <form style="justify-content: space-around; display: grid;">
+                                            <div>
+                                                <input id="all" class="filter checked" type="checkbox" checked>
+                                                <label for="all">Все</label>
+                                            </div>
+                                            <div>
+                                                <input id="two" class="filter checked" type="checkbox" checked>
+                                                <label for="two">2</label>
+                                            </div>
+                                            <div>
+                                                <input id="three" class="filter checked" type="checkbox" checked>
+                                                <label for="three">3</label>
+                                            </div>
+                                            <div>
+                                                <input id="four" class="filter checked" type="checkbox" checked>
+                                                <label for="four">4</label>
+                                            </div>
+                                            <div>
+                                                <input id="five" class="filter checked" type="checkbox" checked>
+                                                <label for="five">5</label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </th>
+                            <th class="ascdesc">Комната
+                                <button onclick="myFunction(1)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
                                 <div class="div_filter" style="display: none; position: relative;">
                                     <div style="position: absolute; background-color: #ffffff; min-width: 80px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
                                         <form style="justify-content: space-around; display: grid;">
@@ -171,7 +222,7 @@
                             <th>Имя</th>
                             <th>Отчество</th>
                             <th>Статус
-                                <button onclick="myFunction(1)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <button onclick="myFunction(2)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
                                 <div class="div_filter" style="display: none; position: relative;">
                                     <div style="position: absolute; background-color: #ffffff; min-width: 220px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
                                         <form style="justify-content: space-around; display: grid;">
@@ -208,7 +259,7 @@
                                 </div>
                             </th>
                             <th style="display: none">Форма обучения
-                                <button onclick="myFunction(2)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
+                                <button onclick="myFunction(3)" class="btn btn-sm"><i class="fas fas fa-filter"></i></button>
                                 <div class="div_filter" style="display: none; position: relative;">
                                     <div style="position: absolute; background-color: #ffffff; min-width: 100px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px;">
                                         <form style="justify-content: space-around; display: grid;">
@@ -249,8 +300,12 @@
                         </thead>
                         <tbody>
                         @foreach ($students as $student)
-                            @if($student->live != 1)
+                            @if ($student->live)
+                                <tr class="odd" style="display: none">
+                            @else
                                 <tr class="odd">
+                            @endif
+                                <td class="seo td_filter">{{ $student->room->level }}</td>
                                 <td class="seo td_filter">{{ $student->room->number }}</td>
                                 <td class="seo">{{ $student->surname }}</td>
                                 <td class="seo">{{ $student->name }}</td>
@@ -293,8 +348,8 @@
                                         </button>
                                     </form>
                                 </td>
+                                <td class="live" style="display: none">{{ $student->live }}</td>
                             </tr>
-                            @endif
                         @endforeach
                         </tbody>
                     </table>
@@ -308,8 +363,8 @@
                     <p>Здесь пока пусто..</p>
                 @endif
             </div>
-
     </section>
+
     <!-- /.content -->
 @endsection
 

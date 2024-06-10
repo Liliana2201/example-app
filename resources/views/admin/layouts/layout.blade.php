@@ -182,6 +182,7 @@
             icon.style.color="#000000";
         }
     }
+    // функция фильтрации записей
     const btn = document.getElementsByClassName("div_filter");
     const tr = document.getElementById("table").querySelectorAll("tr");
 
@@ -255,9 +256,80 @@
             });
         }
     }
-    function openDiv() {
-        let btn = document.getElementsByClassName("div_column").item(0);
-        let icon = document.getElementById("column");
+    // функция отображения проживающих и не проживающих студентов
+    const check_live = document.getElementsByClassName("live_ch");
+
+    for (let i=0; i < check_live.length; i++){
+        check_live.item(i).addEventListener('change', function() {
+            if (check_live.item(i).id.includes('all')){
+                if (check_live.item(i).classList.contains("unchecked")){ // если включили "все"
+                    check_live.item(i).classList.replace("unchecked", "checked");
+                    for (let j = i; j < check_live.length; j++){
+                        check_live.item(j).classList.replace("unchecked", "checked");
+                        check_live.item(j).checked = true;
+                    } // убираем у скрытых строк этот класс
+                    for (let n=1; n<tr.length; n++){
+                        tr[n].style.display = "";
+                    }
+                }
+                else{ // если выключили "все"
+                    check_live[i].classList.replace("checked", "unchecked");
+                    for (let j = i; j < check_live.length; j++){
+                        check_live.item(j).classList.replace("checked", "unchecked");
+                        check_live.item(j).checked = false;
+                    } // добавляем всем строкам в таблице скрытность
+                    for (let n=1; n<tr.length; n++){
+                        tr[n].style.display = "none";
+                    }
+                }
+            }
+            else{
+                if (check_live.item(i).classList.contains("unchecked")){ // включили один из пунктов
+                    check_live.item(i).classList.replace("unchecked", "checked");
+                    let flag = true;
+                    for (let k=1; k<check_live.length; k++){
+                        if (check_live.item(k).classList.contains("unchecked") && k !== i)
+                            flag=false;
+                    }
+                    if(flag){ // если все остальные включены, включили "все"
+                        check_live.item(0).classList.replace("unchecked", "checked");
+                        check_live.item(0).checked = true;
+                    }
+                    if (check_live.item(i).id === 'live')
+                        for (let n=1; n<tr.length; n++){
+                            if (tr[n].getElementsByClassName('live').item(0).innerText == 0)
+                                tr[n].style.display = "";
+                        }
+                    else
+                        for (let n=1; n<tr.length; n++){
+                            if (tr[n].getElementsByClassName('live').item(0).innerText == 1)
+                                tr[n].style.display = "";
+                        }
+                }
+                else{ // выключили один из пунктов
+                    check_live.item(i).classList.replace("checked", "unchecked");
+                    if (check_live.item(0).classList.contains("checked")){ // если включено "все" - выключаем
+                        check_live.item(0).classList.replace("checked", "unchecked");
+                        check_live.item(0).checked = false;
+                    }
+                    if (check_live.item(i).id === 'live')
+                        for (let n=1; n<tr.length; n++){
+                            if (tr[n].getElementsByClassName('live').item(0).innerText == 0)
+                                tr[n].style.display = "none";
+                        }
+                    else
+                        for (let n=1; n<tr.length; n++){
+                            if (tr[n].getElementsByClassName('live').item(0).innerText == 1)
+                                tr[n].style.display = "none";
+                        }
+                }
+            }
+        });
+    }
+
+    function openDiv(i) {
+        let btn = document.getElementsByClassName("div_column").item(i);
+        let icon = document.getElementsByClassName("i_column").item(i);
         if (btn.style.display === "none"){
             btn.style.display="inline-block";
             icon.classList.remove("fa-caret-down");
