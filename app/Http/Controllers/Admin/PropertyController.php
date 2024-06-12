@@ -21,7 +21,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Properties::paginate(10);
+        $properties = Properties::all();
         foreach ($properties as $property) {
             $dif = Carbon::now('Asia/Krasnoyarsk')->floatDiffInYears($property->date_del);
             //dd($dif);

@@ -154,11 +154,6 @@
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        {{ $properties->links() }}
-                    </div>
-                </div>
                 @else
                     <p>Здесь пока пусто..</p>
                 @endif

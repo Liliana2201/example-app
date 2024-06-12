@@ -32,8 +32,8 @@ class HomeController extends Controller
 
     public function news()
     {
-        $news = News::with('tags')->orderBy('created_at', 'desc')->paginate(3);
-        $tags = Tags::with('news')->get(); 
+        $news = News::with('tags')->orderBy('created_at', 'desc')->paginate(10);
+        $tags = Tags::with('news')->get();
         return view('home.news', compact('news', 'tags'));
     }
 
@@ -93,7 +93,7 @@ class HomeController extends Controller
 
         // Получаем email авторизованного пользователя
         $userEmail = auth()->user()->email;
-        
+
         // Получаем ID студента из таблицы students, используя email
         $studentId = Students::where('email', $userEmail)->first()->id;
         // dd($studentId);

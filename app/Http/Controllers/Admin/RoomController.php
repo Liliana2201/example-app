@@ -54,7 +54,8 @@ class RoomController extends Controller
         ]);
         $rooms = Rooms::create($request->all());
         $rooms->properties()->sync($request->properties);
-        foreach ($request->properties as $property){
+        foreach ($rooms->properties as $property){
+            //dd($property);
             $property->status = 1;
             $property->update();
         }
@@ -94,7 +95,7 @@ class RoomController extends Controller
         $room = Rooms::find($id);
         $room -> update($request->all());
         $room->properties()->sync($request->properties);
-        foreach ($request->properties as $property){
+        foreach ($room->properties as $property){
             $property->status = 1;
             $property->update();
         }
