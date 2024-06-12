@@ -21,9 +21,9 @@
                         <div class="dt-buttons btn-group flex-wrap">
                             <button class="btn btn-secondary buttons-copy" onClick="copytable('table')" type="button">Копировать</button>
                             <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'properties')" type="button">Excel</button>
-                            <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
+                            <button id="buttons-pdf" class="btn btn-secondary" type="button"><a href="//example-app/public/uploads/files/students/students.pdf" style="text-decoration: none; color: #ffffff" download>PDF</a></button>
                             <button class="btn btn-secondary buttons-print" onClick="printData()" type="button">Печать</button>
-                            <button onclick="openDiv(0)" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i class="fas fa-caret-down i_column"></i></button>
+                            <button onclick="openDiv(0)" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i class="i_column fas fa-caret-down"></i></button>
                             <div class="div_column" style="display: none; position: relative;">
                                 <div style="position: absolute; background-color: #ffffff; min-width: 400px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                     <form style="justify-content: space-around; display: list-item; padding: 10px">
@@ -132,7 +132,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <button onclick="openDiv(1)" class="btn btn-secondary buttons-livevis" type="button">Проживают <i class="fas fa-caret-down i_column"></i></button>
+                            <button onclick="openDiv(1)" class="btn btn-secondary buttons-livevis" type="button">Проживают <i class="i_column fas fa-caret-down"></i></button>
                             <div class="div_column" style="display: none; position: relative;">
                                 <div style="position: absolute; background-color: #ffffff; min-width: 160px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                     <form style="justify-content: space-around; display: list-item; padding: 10px">

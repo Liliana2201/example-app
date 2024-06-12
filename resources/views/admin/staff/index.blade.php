@@ -23,7 +23,7 @@
                             <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'staff')" type="button">Excel</button>
                             <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
                             <button class="btn btn-secondary buttons-print" onClick="printData()" type="button">Печать</button>
-                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i id="column" class="fas fa-caret-down"></i></button>
+                            <button onclick="openDiv(0)" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i class="i_column fas fa-caret-down"></i></button>
                             <div class="div_column" style="display: none; position: relative;">
                                 <div style="position: absolute; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                     <form style="justify-content: space-around; display: grid;">

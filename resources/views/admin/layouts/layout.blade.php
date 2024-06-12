@@ -434,7 +434,6 @@
         window.getSelection().addRange(range)
         document.execCommand('copy')
     }
-
     // jspdf плагин должен был всех спасти, но увы...
     /*
     $(function(){
