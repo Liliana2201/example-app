@@ -16,7 +16,7 @@
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
                                 <b>Баланс</b>
-                                <p class="float-right">{{ $balance }}</p>
+                                <p class="float-right">{{ $balance }} рублей</p>
                             </li>
                         </ul>
                     </div>
@@ -37,20 +37,24 @@
                         <div class="tab-content">
                             <div class="active tab-pane" id="im">
 
-                                <div>
-                                    <div class="user-block">
-                                        <span class="description">Имущество, выданное общежитием:</span>
-                                        <ul>
-                                            <li>Одеяло</li>
-                                        </ul>
-                                    </div>
+                                <div class="user-block">
+                                    <span class="description">
+                                        {{ !empty($propertiesList) ? 'Имущество, выданное общежитием:' : 'У вас нет имущества, выданного общежитием.' }}
+                                    </span>
+                                    {!! $properties !!}
                                 </div>
 
                             </div>
 
                             <div class="tab-pane" id="st">
-
-
+                                <div>
+                                    <div class="user-block">
+                                        <span>{{ $laundryStatus }}</span>
+                                        @if (!empty($laundryList))
+                                        <ul>{!! $laundryList !!}</ul>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" id="settings">

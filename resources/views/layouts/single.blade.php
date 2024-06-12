@@ -52,17 +52,18 @@
                                     </span>
                                 </button>
                             </div>
-
                         </div>
+                        @if (Route::has('login'))
+                        @auth
                         <div class="top-line-right-content">
-                            <div class="res-links-wrap">
-                                <div class="res-links">
-                                    <div id="js-res-links" class="droplist-main">
-
-                                    </div>
+                            <div class="quick-links-wrap">
+                                <div class="quick-links">
+                                    <a href="{{ route('cabinet') }}" style="font-size: 150%;">Личный кабинет</a>
                                 </div>
                             </div>
                         </div>
+                        @endauth
+                        @endif
                     </div>
                 </div>
                 <div class="head-content">

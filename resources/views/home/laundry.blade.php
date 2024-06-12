@@ -12,9 +12,9 @@
     <table id="time-slots">
         <tr>
             <th>Время</th>
-            <th>Машинка 1</th>
-            <th>Машинка 2</th>
-            <th>Машинка 3</th>
+            @foreach ($machines as $machine)
+            <th>Машинка {{ $machine->id }}</th>
+            @endforeach
         </tr>
         <!-- Временные интервалы будут вставлены здесь -->
     </table>
@@ -98,7 +98,7 @@
         };
         const formattedDate = selectedDate.toLocaleDateString('ru-RU', options);
         document.getElementById('selected-date').textContent = `Выбранное число: ${formattedDate}`;
-        generateTimeSlots();
+        fetchMachineData(); // Вызываем функцию для получения данных о машинах
     }
 
     function disableRandomButtons(count) {
@@ -110,7 +110,16 @@
         });
     }
 
-    function generateTimeSlots() {
+    function fetchMachineData() {
+        fetch('/laundry/machines/data')
+            .then(response => response.json())
+            .then(data => {
+                generateTimeSlots(data);
+            })
+            .catch(error => console.error('Ошибка при получении данных о машинах:', error));
+    }
+
+    function generateTimeSlots(machines) {
         const timeSlotsTable = document.getElementById('time-slots');
         // Удаляем предыдущие строки, кроме заголовка
         while (timeSlotsTable.rows.length > 1) {
@@ -121,17 +130,17 @@
             const row = timeSlotsTable.insertRow();
             const timeCell = row.insertCell();
             timeCell.textContent = interval;
-            for (let i = 0; i < 3; i++) {
+            machines.forEach(machine => {
                 const cell = row.insertCell();
                 const button = document.createElement('button');
                 button.textContent = 'Записаться';
                 button.setAttribute('data-interval', interval);
-                button.setAttribute('data-machine-number', i + 1);
+                button.setAttribute('data-machine-id', machine.id);
                 button.onclick = function(event) {
-                    bookTime(event, interval, i + 1);
+                    bookTime(event, interval, machine.id);
                 };
                 cell.appendChild(button);
-            }
+            });
         });
         disableRandomButtons(17);
     }
@@ -183,6 +192,7 @@
 
     document.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector('.container-fluid').innerHTML = createFullMonthCalendar();
+        fetchMachineData(); // Вызываем функцию для получения данных о машинах сразу после загрузки DOM
     });
 
     document.getElementById('modalOverlay').addEventListener('click', function(event) {

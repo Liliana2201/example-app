@@ -14,7 +14,7 @@
     <script src="/assets/students/js/web.assets_common.js"></script>
     <script src="/assets/students/js/website.assets_frontend.js"></script>
     <script src="https://kit.fontawesome.com/7cdabb21f6.js" crossorigin="anonymous"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>

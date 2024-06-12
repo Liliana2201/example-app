@@ -17,15 +17,19 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/abiturient', 'HomeController@abiturient')->name('abiturient');
 
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/news', 'HomeController@news')->name('news');
-    Route::get('/news{slug}', 'HomeController@news')->name('news.single');
+    Route::get('/news/tag/{tag}', 'HomeController@tag')->name('news.tag');
     Route::get('/request', 'HomeController@request')->name('request');
     Route::get('/requestt', 'HomeController@requestt')->name('requestt');
     Route::get('/laundry', 'HomeController@laundry')->name('laundry');
     Route::get('/complaint', 'HomeController@complaint')->name('complaint');
     Route::get('/cabinet', 'HomeController@cabinet')->name('cabinet');
     Route::post('/add-application', 'HomeController@addApplication')->name('add_application');
+    Route::get('/laundry/machines/data', 'HomeController@getMachinesData');
+    Route::get('/laundry/bookings', 'HomeController@getBookings');
+    Route::post('/laundry/bookings/create', 'HomeController@createBooking');
 });
 
 Route::group( ['middleware' => 'auth'], function () {
