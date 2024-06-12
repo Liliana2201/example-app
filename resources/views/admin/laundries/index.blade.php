@@ -22,7 +22,6 @@
                             <button class="btn btn-secondary buttons-copy" onClick="copytable('table')" type="button">Копировать</button>
                             <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'laundries')" type="button">Excel</button>
                             <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
-                            <button class="btn btn-secondary buttons-print" onClick="printData()" type="button">Печать</button>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
