@@ -20,12 +20,9 @@
                 <div class="row mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
-                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button>
-                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
-                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
-                            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-
+                            <button class="btn btn-secondary buttons-copy" onClick="copytable('table')" type="button">Копировать</button>
+                            <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'applications')" type="button">Excel</button>
+                            <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">

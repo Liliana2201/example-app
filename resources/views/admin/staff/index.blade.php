@@ -19,12 +19,10 @@
                 <div class="row mb-2 mt-2">
                     <div class="col-sm-12 col-md-6">
                         <div class="dt-buttons btn-group flex-wrap">
-                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Copy</span></button>
-                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>CSV</span></button>
-                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>Excel</span></button>
-                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>PDF</span></button>
-                            <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button"><span>Print</span></button>
-                            <button onclick="openDiv()" class="btn btn-secondary buttons-colvis" type="button">Column visibility <i id="column" class="fas fa-caret-down"></i></button>
+                            <button class="btn btn-secondary buttons-copy" onClick="copytable('table')" type="button">Копировать</button>
+                            <button class="btn btn-secondary buttons-excel" onClick="tabletoExcel('table', 'staff')" type="button">Excel</button>
+                            <button id="buttons-pdf" class="btn btn-secondary" type="button">PDF</button>
+                            <button onclick="openDiv(0)" class="btn btn-secondary buttons-colvis" type="button">Видимость колонок <i class="i_column fas fa-caret-down"></i></button>
                             <div class="div_column" style="display: none; position: relative;">
                                 <div style="position: absolute; background-color: #ffffff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); border-radius: 10px; z-index: 1">
                                     <form style="justify-content: space-around; display: grid;">
